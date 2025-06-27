@@ -1,6 +1,6 @@
-package org.example;
+package org.example.task1;
 
-import static org.example.MathOperations.*;
+import static org.example.task1.MathOperations.*;
 
 public class Main {
     public static void main(String[] args) {
