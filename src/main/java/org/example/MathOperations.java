@@ -42,5 +42,43 @@ public class MathOperations {
         return perimiter;
     }
 
-    static double convertSecondsToMinutes(int seconds)
+    static double convertSecondsToMinutes(int seconds) {
+        double minute = seconds / 60;
+        return minute;
+    }
+
+    static double averageSpeed(double distance, double time) {
+        double avSpeed = distance / time;
+        return avSpeed;
+    }
+
+    static double findHypotenuse(double a, double b) {
+        double hyptenuse = Math.sqrt(Math.pow(a, a) + Math.pow(b, b));
+        return hyptenuse;
+    }
+
+    static double circleCircumference(double radius) {
+        double circle = 2 * Math.PI * radius;
+        return circle;
+    }
+
+    static double calculatePercentage(double total, double part) {
+        if (total <= 0) {
+            System.out.println("На ноль делить можно, но не сегодня, дружок");
+        } else {
+            double percent = (part / total) * 100;
+            return percent;
+        }
+        return total;
+    }
+
+    static double celsiusToFahrenheit(double c) {
+        double far = c * 9 / 5 + 32;
+        return far;
+    }
+
+    static double fahrenheitToCelsius(double f) {
+        double cel = (f - 32) * 5 / 9;
+        return cel;
+    }
 }
