@@ -4,52 +4,23 @@ import static org.example.task1.MathOperations.*;
 
 public class Main {
     public static void main(String[] args) {
-        int add = add(1, 8);
-        int sub = subtract(8, 5);
-        int mul = multiply(1, 8);
-        double div = divide(1.2, 8.3);
-        System.out.println(add);
-        System.out.println(sub);
-        System.out.println(mul);
-        System.out.println(div);
 
-        int max = findMax(3, 9);
-        System.out.println(max);
-
-        int mod = difference(2, 9);
-        System.out.println(mod);
-
-        int area = squareArea(4);
-        System.out.println(area);
-        int perimiter = squarePerimeter(8);
-        System.out.println(perimiter);
-
-        double min = convertSecondsToMinutes(137);
-        System.out.println(min);
-
-        double averageSpeed1 = averageSpeed(123, 23);
-        double averageSpeed2 = averageSpeed(23, 123);
-        System.out.println(averageSpeed1);
-        System.out.println(averageSpeed2);
-
-        double hypotenuse = findHypotenuse(4, 4);
-        double hypotenuse2 = findHypotenuse(5, 5);
-        System.out.println(hypotenuse);
-        System.out.println(hypotenuse2);
-
-        double radius = circleCircumference(5);
-        double radius2 = circleCircumference(8);
-        System.out.println(radius);
-        System.out.println(radius2);
-
-        double percent = calculatePercentage(0, 100);
-        double percent2 = calculatePercentage(100, 25);
-        System.out.println(percent);
-        System.out.println(percent2);
-
-        double far = fahrenheitToCelsius(4);
-        double cel = celsiusToFahrenheit(4);
-        System.out.println(far);
-        System.out.println(cel);
+        System.out.println(add(5, 2));
+        System.out.println(subtract(8, 14));
+        System.out.println(multiply(4, 7));
+        System.out.println(divide(36, 8));
+        System.out.println("Большее из двух чисел = " + findMax(36, 8));
+        System.out.println("Модуль = " + difference(8, 48));
+        System.out.println("Площадь квадрата = " + squareArea(8));
+        System.out.println("Периметр квадрата = " + squarePerimeter(8));
+        System.out.println("Количество минут = " + convertSecondsToMinutes(800));
+        System.out.println("Скорость 1-го автомобиля =  " + averageSpeed(800, 30));
+        System.out.println("Скорость 2-го автомобиля = " + averageSpeed(500, 60));
+        System.out.println("Гипотенуза = " + findHypotenuse(30, 60));
+        System.out.println("Окружность Земли = " + circleCircumference(12000));
+        System.out.println("Окружность Марса = " + circleCircumference(7000));
+        System.out.println("Процент = " + calculatePercentage(0, 20));
+        System.out.println("Фарнегейт = " + celsiusToFahrenheit(17));
+        System.out.println("Цельсия = " + fahrenheitToCelsius(73));
     }
 }

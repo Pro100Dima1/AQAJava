@@ -3,58 +3,58 @@ package org.example.task1;
 public class MathOperations {
 
     static int add(int x, int y) {
-        int resAdd = x + y;
-        return resAdd;
+        int sum = x + y;
+        return sum;
     }
 
     static int subtract(int x, int y) {
-        int resSubstract = x - y;
-        return resSubstract;
+        int sub = x - y;
+        return sub;
     }
 
     static int multiply(int x, int y) {
-        int resMultiply = x * y;
-        return resMultiply;
+        int mul = x * y;
+        return mul;
     }
 
-    static double divide(double x, double y) {
-        double resDivide = x / y;
-        return resDivide;
+    static int divide(int x, int y) {
+        int div = x / y;
+        return div;
     }
 
     static int findMax(int a, int b) {
-        int res = Math.max(a, b);
-        return res;
+        int max = Math.max(a, b);
+        return max;
     }
 
     static int difference(int x, int y) {
-        int mod = Math.abs(x - y);
-        return mod;
+        int module = Math.abs(x - y);
+        return module;
     }
 
     static int squareArea(int side) {
-        int area = side * side;
-        return area;
+        int squareArea = side * side;
+        return squareArea;
     }
 
     static int squarePerimeter(int side) {
-        int perimiter = side * 4;
-        return perimiter;
+        int squarePerimeter = side * 4;
+        return squarePerimeter;
     }
 
     static double convertSecondsToMinutes(int seconds) {
-        double minute = seconds / 60;
-        return minute;
+        double minutes = seconds / 60;
+        return minutes;
     }
 
     static double averageSpeed(double distance, double time) {
-        double avSpeed = distance / time;
-        return avSpeed;
+        double averageSpeed = distance / time;
+        return averageSpeed;
     }
 
     static double findHypotenuse(double a, double b) {
-        double hyptenuse = Math.sqrt(Math.pow(a, a) + Math.pow(b, b));
-        return hyptenuse;
+        double hypotenuse = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+        return hypotenuse;
     }
 
     static double circleCircumference(double radius) {
@@ -81,4 +81,6 @@ public class MathOperations {
         double cel = (f - 32) * 5 / 9;
         return cel;
     }
+
+
 }
