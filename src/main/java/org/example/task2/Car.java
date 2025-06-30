@@ -1,31 +1,31 @@
 package org.example.task2;
 
 public class Car {
-    String brand;
-    int year;
+String brand;
+int year;
 
-    Car(String brand, int year) {
-        this.brand = brand;
-        this.year = year;
-    }
+Car (String brand, int year){
+    this.brand = brand;
+    this.year = year;
+}
 
-    String getBrand() {
-        return this.brand;
-    }
+String getBrand(){
+    return this.brand;
+}
 
-    void setBrand(String newBrand) {
-        this.brand = newBrand;
-    }
+int getYear(){
+    return this.year;
+}
 
-    int getYear(){
-        return this.year;
-    }
+void setBrand(String brand){
+    this.brand = brand;
+}
 
-    void setYear(int newYear){
-        this.year = newYear;
-    }
+void setYear (int year){
+    this.year = year;
+}
 
-    void print(){
-        System.out.println("Марка машины: " + this.brand + ". Год выпуска: " + this.year);
-    }
+void print(){
+    System.out.println("Марка машины: " + this.brand + ". Год выпуска: " + this.year);
+}
 }

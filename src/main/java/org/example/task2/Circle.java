@@ -3,27 +3,26 @@ package org.example.task2;
 public class Circle {
     double radius;
 
-    Circle (int radius){
+    Circle(double radius) {
         this.radius = radius;
     }
 
-    double getRadius(){
+    double getRadius() {
         return this.radius;
     }
 
-    void setRadius(double radius){
+    void setRadius(double radius) {
         this.radius = radius;
     }
 
-    double calculateArea(){
-        double area = Math.PI * Math.pow(radius, 2);
-        System.out.println("Площадь круга: " + area);
-        return area;
+    double calculateArea() {
+        double areaOfCircle = Math.PI * Math.pow(this.radius, 2);
+        return areaOfCircle;
     }
 
-    double calculateCircumference(){
-        double circumference = 2 * Math.PI * radius;
-        System.out.println("Длинна окружности: " + circumference);
-        return circumference;
+    double calculateCircumference() {
+        double circumferenceOfCircle = 2 * Math.PI * this.radius;
+        return circumferenceOfCircle;
     }
+
 }

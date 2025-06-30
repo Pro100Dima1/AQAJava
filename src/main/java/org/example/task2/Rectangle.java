@@ -4,24 +4,24 @@ public class Rectangle {
     int width;
     int height;
 
-    Rectangle(int width, int height){
-        this.height = height;
+    Rectangle(int width, int height) {
         this.width = width;
+        this.height = height;
     }
 
-    int getWidth(){
+    public int getWidth() {
         return this.width;
     }
 
-    int getHeight(){
+    public int getHeight() {
         return this.height;
     }
 
-    void setWidth(int newWidth){
-        this.width = newWidth;
+    void setWidth(int width) {
+        this.width = width;
     }
 
-    int calculateArea(int width, int height){
+    int calculateArea(){
         int area = width * height;
         return area;
     }

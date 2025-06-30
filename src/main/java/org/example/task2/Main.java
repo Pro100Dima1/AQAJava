@@ -2,56 +2,44 @@ package org.example.task2;
 
 public class Main {
     public static void main(String[] args) {
-        Car bmw = new Car("BMW", 1997);
-        Car nissan = new Car("Nissan", 2003);
+        Car car = new Car("BMW", 1967);
+        car.print();
+        car.setYear(1997);
+        car.print();
 
-        bmw.print();
-        nissan.print();
+        Rectangle rectangle = new Rectangle(10, 10);
+        rectangle.setWidth(30);
+        System.out.println("Новая площадь прямоугольника = " + rectangle.calculateArea());
 
-        bmw.setBrand("Mersedec");
-        nissan.setYear(1999);
-        bmw.print();
-        nissan.print();
+        Book historyBook = new Book("История 21 века", "Илья Кузьмич");
+        historyBook.setAuthor("Фома Никитич");
+        historyBook.printInfo();
 
-        Rectangle rectangle = new Rectangle(10, 5);
-        System.out.println("Площадь нового прямоугольника = " + rectangle.calculateArea(5, 5));
-
-        Book bookHistoryOfMath = new Book("История математики", "Гюйгенс Френель");
-        bookHistoryOfMath.setAuthor("Григорий Фихтенгольц");
-        bookHistoryOfMath.printInfo();
-
-        BankAccount bankAccount = new BankAccount("Филя Филимонов", 200);
+        BankAccount bankAccount = new BankAccount("Федя", 2000);
         bankAccount.printBalance();
 
         Point point = new Point(2, 5);
+        point.setX(18);
         point.print();
-        point.setX(8);
-        point.print();
 
-        StudentGroup studentGroup = new StudentGroup("Разработки", 5);
-        studentGroup.setStudentCount(12);
-        studentGroup.printInfo();
+        StudentGroup rf151 = new StudentGroup("РФ-15-1", 20);
+        rf151.setStudentCount(10);
+        rf151.printInfo();
 
+        Circle circle = new Circle(25);
+        circle.setRadius(10);
+        System.out.println("Площадь круга = " + circle.calculateArea() + ". Длина окружности = " + circle.calculateCircumference());
 
-        Circle circle = new Circle(13);
-        circle.setRadius(3);
-        circle.calculateArea();
-        circle.calculateCircumference();
+        Teacher teacherMath = new Teacher("Галина Ивановна", "Математику");
+        teacherMath.setSubject("философию");
+        teacherMath.printInfo();
 
-        Teacher mathTeacher = new Teacher("Валера", "Математику");
-        mathTeacher.setSubject("Историю");
-        mathTeacher.printInfo();
+        Product apple = new Product("Яблоко", 100);
+        apple.applyDiscount(20);
+        apple.printInfo();
 
-        Product product = new Product("тарелка", 100);
-        product.applyDiscount(20);
-        product.printInfo();
-        product.setPrice(1000);
-        product.applyDiscount(20);
-        product.printInfo();
-
-        Laptop laptop = new Laptop("Acer", 2500);
-        laptop.printInfo();
-        laptop.setPrice(3800);
-        laptop.printInfo();
+        Laptop dell = new Laptop("ACER", 3000);
+        dell.setPrice(2500);
+        dell.printInfo();
     }
 }

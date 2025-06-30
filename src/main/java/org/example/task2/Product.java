@@ -5,8 +5,8 @@ public class Product {
     int price;
 
     Product(String name, int price) {
-        this.price = price;
         this.name = name;
+        this.price = price;
     }
 
     String getName() {
@@ -29,6 +29,8 @@ public class Product {
     }
 
     void printInfo() {
-        System.out.println("Товар " + name + " стоит со скидкой: " + this.price);
+        System.out.println("Товар " + this.name + " стоит со скидкой: " + this.price);
     }
+
+
 }

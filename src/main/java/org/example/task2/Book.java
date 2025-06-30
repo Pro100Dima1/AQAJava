@@ -1,35 +1,33 @@
 package org.example.task2;
 
 public class Book {
-    String title;
-    String author;
+String title;
+String author;
 
-    Book(String title, String author) {
-        this.author = author;
-        this.title = title;
-    }
+Book(String title, String author){
+    this.author = author;
+    this.title = title;
+}
 
-    public String getAuthor() {
-        return this.author;
-    }
+String getTitle(){
+    return this.title;
+}
 
-    public String getTitle() {
-        return this.title;
-    }
+String getAuthor(){
+    return this.author;
+}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+void setTitle(String title){
+    this.title = title;
+}
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+void setAuthor(String author){
+    this.author = author;
+}
 
-    void printInfo(){
-        System.out.println("Автор: " + author + ". Название книги: " + title);
-    }
-
-
+void printInfo(){
+    System.out.println("Автора: " + this.author + ". Название кники: " + this.title);
+}
 }
 
 

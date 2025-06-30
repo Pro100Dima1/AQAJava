@@ -4,38 +4,34 @@ public class BankAccount {
     String owner;
     double balance;
 
-    BankAccount(String owner, double balance){
-        this.balance = balance;
+    BankAccount(String owner, double balance) {
         this.owner = owner;
+        this.balance = balance;
     }
 
-    public double getBalance() {
-        return this.balance;
-    }
-
-    public String getOwner() {
+    String getOwner() {
         return this.owner;
     }
 
-    public void setOwner(String owner) {
+    double getBalance() {
+        return this.balance;
+    }
+
+    void setOwner(String owner) {
         this.owner = owner;
     }
 
-    double deposit(double amount){
-       double depositBalance = this.balance + amount;
-return depositBalance;
+    double deposit(double amount) {
+        double balanceWithDeposit = this.balance + amount;
+        return balanceWithDeposit;
     }
 
-    double withdraw(double amount){
+    double withdraw(double amount) {
         double withdrawBalance = this.balance - amount;
         return withdrawBalance;
     }
 
-    void printBalance(){
-        System.out.println("Вы пополнили ваш счет и баланс теперь составляет: " + deposit(300) + " Вы сняли со счета сумму и теперь баланс составляет: " + withdraw(500));
+    void printBalance() {
+        System.out.println("Вы внесли депозит и ваш счет равен: " + deposit(3000) + ". Вы сняли со счета деньги и ваш счет равен: " + withdraw(1500));
     }
-
-
-
-
 }

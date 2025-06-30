@@ -4,24 +4,24 @@ public class Point {
     int x;
     int y;
 
-    public Point(int x, int y) {
+    Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public int getX() {
+    int getX() {
         return this.x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
+    int getY() {
         return this.y;
     }
 
+    void setX(int x){
+        this.x = x;
+    }
+
     void print(){
-        System.out.println("Координата х: " + this.x + ". Координата y: " + this.y);
+        System.out.println("Координата х = " + this.x + ". Координата у = " + this.y);
     }
 }
