@@ -23,6 +23,9 @@ public class TestResult {
                 statement = "Неудовлетворительно";
             }
         }
+        else {
+            System.out.println("Ваш балл выходит за рамки экзамена");
+        }
         return statement;
     }
 }
