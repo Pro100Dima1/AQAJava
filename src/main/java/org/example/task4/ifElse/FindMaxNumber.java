@@ -1,5 +1,24 @@
 package org.example.task4.ifElse;
 
-public class FindMaxNumber {
+import java.util.Scanner;
 
+public class FindMaxNumber {
+    public static void main(String[] args) {
+        System.out.println("Наибольшее число = " + FindMaxNumber.findMaxNumber());
+    }
+
+    public static int findMaxNumber() {
+        Scanner scanner = new Scanner(System.in);
+        int firstNumber = scanner.nextInt();
+        int secondNumber = scanner.nextInt();
+        int maxNumber = 0;
+
+        if (firstNumber > secondNumber) {
+            maxNumber = firstNumber;
+        }
+        if (secondNumber > firstNumber) {
+            maxNumber = secondNumber;
+        }
+        return maxNumber;
+    }
 }
