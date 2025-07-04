@@ -11,8 +11,6 @@ public class DayOfWeek {
     public static void printDayOfWeek() {
         Scanner scanner = new Scanner(System.in);
         int days = scanner.nextInt();
-
-        if (days > 0 && days < 8) {
             switch (days) {
                 case 1 -> System.out.println("Понедельник");
                 case 2 -> System.out.println("Вторник");
@@ -21,8 +19,7 @@ public class DayOfWeek {
                 case 5 -> System.out.println("Пятница");
                 case 6 -> System.out.println("Суббота");
                 case 7 -> System.out.println("Воскресенье");
+                default -> System.out.println("Увы, в неделе всего 7 дней");
             }
         }
-        else{System.out.println("Увы, в неделе всего 7 дней");}
-    }
 }
