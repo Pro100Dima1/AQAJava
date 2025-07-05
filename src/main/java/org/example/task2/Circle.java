@@ -17,12 +17,12 @@ public class Circle {
 
     double calculateArea() {
         double areaOfCircle = Math.PI * Math.pow(this.radius, 2);
-        return areaOfCircle;
+        return Math.round(areaOfCircle);
     }
 
     double calculateCircumference() {
         double circumferenceOfCircle = 2 * Math.PI * this.radius;
-        return circumferenceOfCircle;
+        return Math.round(circumferenceOfCircle);
     }
 
 }

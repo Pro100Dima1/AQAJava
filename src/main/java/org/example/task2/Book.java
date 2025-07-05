@@ -26,7 +26,7 @@ void setAuthor(String author){
 }
 
 void printInfo(){
-    System.out.println("Автора: " + this.author + ". Название кники: " + this.title);
+    System.out.println("Автора: " + this.author + ". Название книги: " + this.title);
 }
 }
 
