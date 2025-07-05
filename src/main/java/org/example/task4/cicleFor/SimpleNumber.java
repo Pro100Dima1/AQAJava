@@ -1,6 +1,5 @@
 package org.example.task4.cicleFor;
 
-import javax.swing.*;
 import java.util.Scanner;
 
 public class SimpleNumber {
@@ -14,8 +13,10 @@ public class SimpleNumber {
         int number = scanner.nextInt();
 
         boolean isPrime = true;
-        if (number % 2 == 0) {
-            isPrime = false;
+        for (int i = 2; i <= number - 1; i++) {
+            if (number % i == 0) {
+                isPrime = false;
+            }
         }
         return isPrime;
     }
