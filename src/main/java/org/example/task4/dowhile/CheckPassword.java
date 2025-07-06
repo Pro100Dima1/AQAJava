@@ -10,11 +10,12 @@ public class CheckPassword {
     public static void checkPassword() {
         Scanner scanner = new Scanner(System.in);
         int password;
-        int correctPassword = 123321;
+        int currentPassword = 123321;
 
         do {
             System.out.println("Введите пароль");
             password = scanner.nextInt();
-        } while (password != correctPassword);
+        } while (password != currentPassword);
+
     }
 }

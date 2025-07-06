@@ -9,15 +9,15 @@ public class ReturnInvoice {
 
     public static void invoice() {
         Scanner scanner = new Scanner(System.in);
-        int number = scanner.nextInt();
+        int n = scanner.nextInt();
 
-        if (number > 0) {
-            while (number >= 1) {
-                System.out.println(number);
-                number--;
+        if (n > 0) {
+            while (n >= 1) {
+                System.out.println(n);
+                n--;
             }
         } else {
-            System.out.println("Сегодня принимаются только положительные числа");
+            System.out.println("Вы ввели отрицательное число");
         }
     }
 }

@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class NumberToLetter {
     public static void main(String[] args) {
         System.out.println(letter());
-
     }
 
     public static String letter() {
@@ -13,13 +12,13 @@ public class NumberToLetter {
         int number = scanner.nextInt();
 
         String letter = "";
-        if (number < 100 && number > 90) {
-            letter = "A";
-        } else if (number < 89 && number > 80) {
+        if (number <= 100 && number >= 90) {
+            letter = "А";
+        } else if (number <= 89 && number >= 80) {
             letter = "B";
-        } else if (number < 79 && number > 70) {
+        } else if (number <= 79 && number >= 70) {
             letter = "C";
-        } else if (number < 69 && number > 60) {
+        } else if (number <= 69 && number >= 60) {
             letter = "D";
         } else if (number < 60) {
             letter = "F";

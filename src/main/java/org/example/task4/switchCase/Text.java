@@ -5,22 +5,21 @@ import java.util.Scanner;
 public class Text {
     public static void main(String[] args) {
         System.out.println(text());
-
     }
 
     public static String text() {
         Scanner scanner = new Scanner(System.in);
-        String text = scanner.nextLine();
+        String comand = scanner.nextLine();
 
         String textResult = "";
-        switch (text) {
+        switch (comand) {
             case "start":
                 textResult = "Система запущена";
                 break;
             case "stop":
                 textResult = "Система остановлена";
                 break;
-            case "restrt":
+            case "restar":
                 textResult = "Система перезапущена";
                 break;
             case "status":

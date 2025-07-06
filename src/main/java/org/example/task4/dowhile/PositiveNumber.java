@@ -10,8 +10,9 @@ public class PositiveNumber {
     public static void positiveCheck() {
         Scanner scanner = new Scanner(System.in);
         int number;
+
         do {
-            System.out.println("Введите положительное число");
+            System.out.println("Введите положительное число!");
             number = scanner.nextInt();
         } while (number <= 0);
     }

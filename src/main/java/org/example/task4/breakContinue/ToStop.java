@@ -14,7 +14,7 @@ public class ToStop {
         while (true) {
             comand = scanner.nextLine();
             if (comand.equals("stop")) {
-                System.out.println("Вы ввели: " + comand);
+                System.out.println("Вы остановили программу");
                 break;
             }
         }

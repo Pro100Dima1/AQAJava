@@ -12,7 +12,7 @@ public class Exit {
         String comand;
 
         do {
-            System.out.println("Введите команду выхода!");
+            System.out.println("Введите нужную команду");
             comand = scanner.nextLine();
         } while (!comand.equals("exit"));
     }

@@ -13,10 +13,9 @@ public class SwitchCalculator {
         int firstNumber = scanner.nextInt();
         int secondNumber = scanner.nextInt();
 
-
         int result = 0;
         if (secondNumber == 0 && operator.equals("/")) {
-            System.out.println("Делить на ноль нельзя");
+            System.out.println("Делить на ноль можно, но не сегодня");
         } else {
             switch (operator) {
                 case "+":
@@ -25,14 +24,14 @@ public class SwitchCalculator {
                 case "-":
                     result = firstNumber - secondNumber;
                     break;
-                case "*":
-                    result = firstNumber * secondNumber;
-                    break;
                 case "/":
                     result = firstNumber / secondNumber;
                     break;
+                case "*":
+                    result = firstNumber * secondNumber;
+                    break;
                 default:
-                    System.out.println("Ушли из калькулятора");
+                    System.out.println("Вышел за рамки возможностей калькулятора");
             }
         }
         return result;

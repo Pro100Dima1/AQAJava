@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class OnlyPositiveNumbers {
     public static void main(String[] args) {
         numbers();
+
     }
 
     public static void numbers() {
@@ -14,8 +15,9 @@ public class OnlyPositiveNumbers {
         do {
             number = scanner.nextInt();
             if (number > 0) {
-                System.out.println("Положительное число! " + number);
+                System.out.println(number);
             } else {
+                System.out.println("Вы ввели не положительное число");
                 continue;
             }
         } while (number != 0);

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class IdentificationSizeDiscountByAge {
     public static void main(String[] args) {
-        System.out.println("Ваша скидка = " + ageOfClient() + "%");
+        System.out.println(ageOfClient());
     }
 
     public static int ageOfClient() {
@@ -14,7 +14,7 @@ public class IdentificationSizeDiscountByAge {
         int discount = 0;
         if (age < 18) {
             discount = 25;
-        } else if (age >= 65) {
+        }else if (age >= 65) {
             discount = 30;
         } else {
             discount = 0;

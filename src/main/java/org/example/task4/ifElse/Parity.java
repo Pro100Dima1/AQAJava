@@ -8,8 +8,8 @@ public class Parity {
     }
 
     public static String parityOfNumber() {
-        Scanner enterNumber = new Scanner(System.in);
-        int number = enterNumber.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        int number = scanner.nextInt();
 
         String parity = (number % 2 == 0) ? "Четное" : "Нечетное";
         return parity;

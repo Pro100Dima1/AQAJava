@@ -9,22 +9,17 @@ public class TestResult {
 
     public static String calculateTestResult() {
         Scanner scanner = new Scanner(System.in);
-        int testResult = scanner.nextInt();
+        int testScore = scanner.nextInt();
 
         String statement = "";
-        if (testResult >= 0 && testResult <= 100) {
-            if (testResult >= 90) {
-                statement = "Отлично";
-            } else if (testResult <= 89 && testResult >= 75) {
-                statement = "Хорошо";
-            } else if (testResult <= 74 && testResult >= 60) {
-                statement = "Удовлетворительно";
-            } else if (testResult < 60) {
-                statement = "Неудовлетворительно";
-            }
-        }
-        else {
-            System.out.println("Ваш балл выходит за рамки экзамена");
+        if (testScore >= 90) {
+            statement = "Отлично";
+        } else if (testScore <= 89 && testScore >= 75) {
+            statement = "Хорошо";
+        } else if (testScore <= 74 && testScore >= 60) {
+            statement = "Удовлетворительно";
+        } else if (testScore < 60) {
+            statement = "Неудовлетворительно";
         }
         return statement;
     }

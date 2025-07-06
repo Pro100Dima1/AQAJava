@@ -9,20 +9,19 @@ public class IdentificationSymbolNumber {
     }
 
     public String identificateSymbol() {
-
         Scanner scanner = new Scanner(System.in);
         int number = scanner.nextInt();
 
-        String symbol = "";
+        String symbolNumber = "";
         if (number > 0) {
-            symbol = "Число положительное";
+            symbolNumber = "Число положительное";
         }
         if (number < 0) {
-            symbol = "Число отрицательное";
+            symbolNumber = "Число отрицательное";
         }
         if (number == 0) {
-            symbol = "Число равно 0";
+            symbolNumber = "Число равно нулю";
         }
-        return symbol;
+        return symbolNumber;
     }
 }

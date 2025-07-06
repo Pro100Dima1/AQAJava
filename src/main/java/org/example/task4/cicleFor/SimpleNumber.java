@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class SimpleNumber {
     public static void main(String[] args) {
-        System.out.println("Введенное значение является простым? " + checkNumber());
-
+        checkNumber();
     }
 
     public static boolean checkNumber() {

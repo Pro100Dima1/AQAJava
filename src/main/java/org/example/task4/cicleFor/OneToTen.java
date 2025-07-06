@@ -8,10 +8,7 @@ public class OneToTen {
     }
 
     public static void numberSeries() {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= 10; i++) {
             System.out.println(i);
         }
     }
