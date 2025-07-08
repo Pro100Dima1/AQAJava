@@ -1,12 +1,7 @@
 package org.example.task5.zoo;
 
 abstract public class Animal {
-    private void sound() {
-        System.out.println("Животные звуки");
-    }
+    abstract void sound();
 
-    private void walk() {
-        System.out.println("Прогулка");
-    }
-
+    abstract void move();
 }
