@@ -2,14 +2,14 @@ package org.example.task5.farm;
 
 public class Main {
     public static void main(String[] args) {
-
-        Cattle cow = new Cow();
-        Cattle chicken = new Chicken();
         Farmer farmer = new Farmer();
+        Chicken chicken = new Chicken();
+        Cow cow = new Cow();
 
-        farmer.setAnimal(chicken);
-        farmer.showInfoAboutAnimal();
-        farmer.setAnimal(cow);
-        farmer.showInfoAboutAnimal();
+        farmer.setCattle(chicken);
+        farmer.showInfoAboutCattle();
+
+        farmer.setCattle(cow);
+        farmer.showInfoAboutCattle();
     }
 }

@@ -1,13 +1,14 @@
 package org.example.task5.museum;
 
 public class Sculpture extends Exhibits {
+
     @Override
-    public void historyOfExhibits() {
-        System.out.println("Это скульптура на которой изображен програмист");
+    public void history() {
+        System.out.println("Это скульптура древнего програмиста");
     }
 
     @Override
-    public void StorageConditions() {
-        System.out.println("Эта скульптура требует контроля влажности");
+    public void storageConditions() {
+        System.out.println("Скульптура — нуждается в реставрации");
     }
 }

@@ -3,14 +3,15 @@ package org.example.task5.restaurant;
 public class Main {
     public static void main(String[] args) {
 
-        Menu menu = new Menu();
-        HotDish spageti = new HotDish(37);
+        Menu menu1 = new Menu();
         Drink water = new Drink(100);
+        HotDish spageti = new HotDish(37);
 
-        menu.setDish(spageti);
-        menu.printDishInfo();
+        menu1.setDish(spageti);
+        menu1.showDishesDescription();
 
-        menu.setDish(water);
-        menu.printDishInfo();
+        menu1.setDish(water);
+        menu1.showDishesDescription();
+
     }
 }

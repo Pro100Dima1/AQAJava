@@ -1,14 +1,15 @@
 package org.example.task5.restaurant;
 
 public class Drink extends Dishes {
+
     private int volume;
 
-    Drink(int volume) {
+    Drink(int volume){
         this.volume = volume;
     }
 
     @Override
-    public void dishesDisplay() {
-        System.out.println("Объем напитка = " + this.volume);
+    public void displayInfoDishes() {
+        System.out.println("Объем напитка = " + this.volume + "мл");
     }
 }

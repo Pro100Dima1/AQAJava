@@ -2,14 +2,14 @@ package org.example.task5.zoo;
 
 public class Main {
     public static void main(String[] args) {
-        Elephant mark = new Elephant();
-        Bird marina = new Bird();
-        Zookeeper adminEmployee = new Zookeeper();
+        Zookeeper manager = new Zookeeper();
+        Bird raven = new Bird();
+        Elephant elephant = new Elephant();
 
-        adminEmployee.addAnimal(mark);
-        adminEmployee.showAnimalBehavior();
+        manager.setAnimal(raven);
+        manager.showBehaviourAnimal();
 
-        adminEmployee.addAnimal(marina);
-        adminEmployee.showAnimalBehavior();
+        manager.setAnimal(elephant);
+        manager.showBehaviourAnimal();
     }
 }

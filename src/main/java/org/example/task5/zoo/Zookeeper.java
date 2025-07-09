@@ -3,12 +3,12 @@ package org.example.task5.zoo;
 public class Zookeeper {
     private Animal animal;
 
-    public void showAnimalBehavior() {
-        animal.move();
-        animal.sound();
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
-    public void addAnimal(Animal animal) {
-        this.animal = animal;
+    public void showBehaviourAnimal() {
+        animal.sound();
+        animal.walk();
     }
 }

@@ -4,11 +4,11 @@ public class RollerCoaster extends Attraction {
 
     @Override
     public void feelings() {
-        System.out.println("Американские горки очень быстрые и нагруженые");
+        System.out.println("Очень быстрые и драйвовые");
     }
 
     @Override
-    public void service() {
-        System.out.println("Американские горки нуждаются в чательной проверке безопасности");
+    public void needTO() {
+        System.out.println("Американские горки требуют чательной проверка безопасности");
     }
 }

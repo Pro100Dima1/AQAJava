@@ -1,15 +1,14 @@
 package org.example.task5.farm;
 
 public class Farmer {
+    private Cattle cattle;
 
-    private Cattle animal;
-
-    public void setAnimal(Cattle animal) {
-        this.animal = animal;
+    public void setCattle(Cattle cattle) {
+        this.cattle = cattle;
     }
 
-    public void showInfoAboutAnimal() {
-        animal.production();
-        animal.needCare();
+    public void showInfoAboutCattle() {
+        cattle.product();
+        cattle.needForCare();
     }
 }

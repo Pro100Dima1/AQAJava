@@ -1,13 +1,14 @@
 package org.example.task5.museum;
 
-public class Manuscript extends Exhibits {
+public class Manuscript extends Exhibits  {
+
     @Override
-    public void historyOfExhibits() {
-        System.out.println("Это манускрипт древних разработчиков. На нем можно разобрать ассемблер, нолики и единички");
+    public void history() {
+        System.out.println("Это манускрипт с древними писаниями на асемблере. Сложно читать");
     }
 
     @Override
-    public void StorageConditions() {
-        System.out.println("Этот манускрипт нуждается в рестоврации");
+    public void storageConditions() {
+        System.out.println("Манускрипт — требует контролируемой влажности");
     }
 }

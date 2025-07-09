@@ -1,13 +1,13 @@
 package org.example.task5.entertainmentPark;
 
-public class Carousel extends Attraction{
+public class Carousel extends Attraction {
     @Override
     public void feelings() {
-        System.out.println("Карусели не очень быстрые, но нравятся детям");
+        System.out.println("Не очень быстрый атракцион");
     }
 
     @Override
-    public void service() {
-        System.out.println("На каруселях большой поток детей, поэтому им необходимо частое техническое обслуживание");
+    public void needTO() {
+        System.out.println("Требует частое техническое обслуживание");
     }
 }

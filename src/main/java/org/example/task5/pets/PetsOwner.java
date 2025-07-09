@@ -1,14 +1,14 @@
 package org.example.task5.pets;
 
 public class PetsOwner {
-    private Pets pet;
+    private Pets pets;
 
-    public void setPet(Pets pet) {
-        this.pet = pet;
+    public void setPets(Pets pets) {
+        this.pets = pets;
     }
 
-    public void interactionWithAPet() {
-        pet.feed();
-        pet.leisure();
+    public void animalInteraction() {
+        pets.feed();
+        pets.leisure();
     }
 }

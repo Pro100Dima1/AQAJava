@@ -4,11 +4,11 @@ public class AquariumKeeper {
 
     private SeaAnimal seaAnimal;
 
-    public void setSeaAnimal(SeaAnimal seaAnimal){
+    public void setSeaAnimal(SeaAnimal seaAnimal) {
         this.seaAnimal = seaAnimal;
     }
 
-    public void showSeaAnimalBehavior(){
-        seaAnimal.behavior();
+    public void showInfoAboutSeaAnimal() {
+        seaAnimal.behaviour();
     }
 }

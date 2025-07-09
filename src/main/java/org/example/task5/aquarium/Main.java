@@ -3,14 +3,14 @@ package org.example.task5.aquarium;
 public class Main {
     public static void main(String[] args) {
 
-        SeaAnimal seaAnimal = new Shark();
-        SeaAnimal seaAnimal1 = new StarFish();
-        AquariumKeeper employee1 = new AquariumKeeper();
+        AquariumKeeper aquariumKeeper = new AquariumKeeper();
+        Shark whiteShark = new Shark();
+        StarFish patrik = new StarFish();
 
-        employee1.setSeaAnimal(seaAnimal);
-        employee1.showSeaAnimalBehavior();
+        aquariumKeeper.setSeaAnimal(whiteShark);
+        aquariumKeeper.showInfoAboutSeaAnimal();
 
-        employee1.setSeaAnimal(seaAnimal1);
-        employee1.showSeaAnimalBehavior();
+        aquariumKeeper.setSeaAnimal(patrik);
+        aquariumKeeper.showInfoAboutSeaAnimal();
     }
 }

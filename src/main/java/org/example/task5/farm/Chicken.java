@@ -1,13 +1,14 @@
 package org.example.task5.farm;
 
 public class Chicken extends Cattle {
+
     @Override
-    public void production() {
-        System.out.println("Курица несёт яйца");
+    public void product() {
+        System.out.println("Курица несет яйца");
     }
 
     @Override
-    public void needCare() {
+    public void needForCare() {
         System.out.println("Курица требует зерно");
     }
 }
