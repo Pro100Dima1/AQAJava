@@ -1,4 +1,4 @@
-package org.example.task6.LinkedListEx;
+package org.example.task6.linkedListEx;
 
 import java.util.LinkedList;
 

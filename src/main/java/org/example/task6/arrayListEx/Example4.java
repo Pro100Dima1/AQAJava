@@ -1,7 +1,6 @@
-package org.example.task6.ArrayListEx;
+package org.example.task6.arrayListEx;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Example4 {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package org.example.task6.ArrayListEx;
+package org.example.task6.arrayListEx;
 
 import java.util.ArrayList;
 import java.util.Arrays;
