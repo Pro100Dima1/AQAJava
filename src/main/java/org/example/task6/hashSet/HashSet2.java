@@ -4,19 +4,17 @@ import java.util.HashSet;
 
 public class HashSet2 {
     public static void main(String[] args) {
-        HashSet<Integer> ex2 = new HashSet<>();
-
-        ex2.add(1);
-        ex2.add(2);
-        ex2.add(3);
-        ex2.add(4);
-        ex2.add(5);
-        ex2.add(6);
-        ex2.add(7);
-        ex2.add(8);
-        ex2.add(9);
-        ex2.add(10);
-
-        System.out.println(ex2.contains(5));
+        HashSet<Integer> tenNumbers = new HashSet<>();
+        tenNumbers.add(1);
+        tenNumbers.add(2);
+        tenNumbers.add(3);
+        tenNumbers.add(4);
+        tenNumbers.add(5);
+        tenNumbers.add(6);
+        tenNumbers.add(7);
+        tenNumbers.add(8);
+        tenNumbers.add(9);
+        tenNumbers.add(10);
+        System.out.println(tenNumbers.contains(4));
     }
 }
