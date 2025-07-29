@@ -1,21 +1,22 @@
 package org.example.task7.fileReaderTask;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class ReadFile {
-    public static void main(String[] args) throws IOException {
-        readFile();
-    }
-
-    public static void readFile() {
+    public static void main(String[] args) {
         try {
-            FileReader file = new FileReader("data.txt");
-        } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден");
+            readFile();
+        } catch (IOException e) {
+            throw new FileNotFoundCustomException("НЕ НАЙДЕН ФАЙЛ КАСТОМ ЭКСЕПШН");
         }
     }
 
+    public static void readFile() throws IOException {
+        FileReader file = new FileReader("ata.txt");
+        int character;
+        while ((character = file.read()) != -1) {
+            System.out.println((char) character);
+        }
+    }
 }
