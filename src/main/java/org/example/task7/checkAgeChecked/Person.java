@@ -1,4 +1,4 @@
-package org.example.task7.chechAge;
+package org.example.task7.checkAgeChecked;
 
 public class Person {
     int age;
