@@ -8,14 +8,14 @@ public class ReadFile {
         try {
             readFile();
         } catch (IOException e) {
-            throw new FileNotFoundCustomException("НЕ НАЙДЕН ФАЙЛ КАСТОМ ЭКСЕПШН");
+            throw new FileNotFoundCustomException("Файл не найден");
         }
     }
 
     public static void readFile() throws IOException {
-        FileReader file = new FileReader("ata.txt");
+        FileReader fileReader = new FileReader("data.txt");
         int character;
-        while ((character = file.read()) != -1) {
+        while ((character = fileReader.read()) != -1) {
             System.out.println((char) character);
         }
     }
