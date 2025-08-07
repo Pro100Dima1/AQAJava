@@ -1,0 +1,11 @@
+package org.example.task8.functionalInterface;
+
+import java.util.function.Function;
+
+
+public class FunctionInterface {
+    public static void main(String[] args) {
+        Function<String, Integer> lengthOfString = str -> str.length();
+        System.out.println("Строка длинной: " + lengthOfString.apply("Qwerty"));
+    }
+}

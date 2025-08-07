@@ -1,5 +1,7 @@
 package org.example.task7.genericPair;
 
+import java.util.function.Predicate;
+
 public class Pair<Q, A> {
     private Q firstElement;
     private A secondElement;
