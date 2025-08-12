@@ -6,9 +6,9 @@ import java.util.stream.Collectors;
 
 public class AverageOfNumber {
     public static void main(String[] args) {
-        List<Integer> numb = Arrays.asList(1, 2, 3, 4, 5, 6);
-        double avgOfNumb = numb.stream()
-                .collect(Collectors.averagingInt(x -> x));
-        System.out.println(avgOfNumb);
+        List<Integer> numbers = Arrays.asList(2, 2, 2, 2);
+        double averageNumber = numbers.stream()
+                .collect(Collectors.averagingDouble(n -> n));
+        System.out.println(averageNumber);
     }
 }

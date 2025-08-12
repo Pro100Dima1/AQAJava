@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 
 public class GroupingByFirstChar {
     public static void main(String[] args) {
-        List<String> words = Arrays.asList("Qwerty", "Aqa", "Qazwsx", "Awawa");
-        Map<String, List<String>> groupingWords = words.stream()
-                .collect(Collectors.groupingBy(word -> word.substring(0,1)));
-        System.out.println(groupingWords);
+        List<String> listOfString = Arrays.asList("Qwert", "MTS", "LTE", "MGTS", "QAZWSX");
+        Map<String, List<String>> groupingList = listOfString.stream()
+                .collect(Collectors.groupingBy(str -> str.substring(0, 1)));
+        System.out.println(groupingList);
     }
 }

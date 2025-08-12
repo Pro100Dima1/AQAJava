@@ -9,8 +9,8 @@ public class RemoveDuplicatesFromList {
     public int age;
 
     public RemoveDuplicatesFromList(String name, int age){
-        this.age = age;
         this.name = name;
+        this.age = age;
     }
 
     @Override
@@ -35,16 +35,16 @@ public class RemoveDuplicatesFromList {
     }
 
     public static void main(String[] args) {
-        RemoveDuplicatesFromList persOne = new RemoveDuplicatesFromList("Petr", 12);
-        RemoveDuplicatesFromList persTwo = new RemoveDuplicatesFromList("Olya", 15);
-        RemoveDuplicatesFromList persThree = new RemoveDuplicatesFromList("Goga", 10);
-        RemoveDuplicatesFromList persFour = new RemoveDuplicatesFromList("Goga", 10);
+       RemoveDuplicatesFromList person1 = new RemoveDuplicatesFromList("Olya", 15);
+       RemoveDuplicatesFromList person2 = new RemoveDuplicatesFromList("Nikita", 16);
+       RemoveDuplicatesFromList person3 = new RemoveDuplicatesFromList("Igor", 10);
+       RemoveDuplicatesFromList person4 = new RemoveDuplicatesFromList("Olya", 15);
 
-        List<RemoveDuplicatesFromList> listPerson = List.of(persOne, persTwo, persThree, persFour);
-        List<RemoveDuplicatesFromList> listWithoutDuplicates = listPerson.stream()
-                .distinct()
-                .collect(Collectors.toList());
-        System.out.println(listWithoutDuplicates);
+       List<RemoveDuplicatesFromList> listOfperson = List.of(person1, person2, person3, person4);
+       List<RemoveDuplicatesFromList> listWithoutDuplicates = listOfperson.stream()
+               .distinct()
+               .collect(Collectors.toList());
+       System.out.println(listWithoutDuplicates);
     }
 }
 

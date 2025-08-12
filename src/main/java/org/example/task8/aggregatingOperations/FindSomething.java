@@ -5,9 +5,9 @@ import java.util.List;
 
 public class FindSomething {
     public static void main(String[] args) {
-        List<Integer> numb = Arrays.asList(1, 2, 3, 4, 5, 6);
-        boolean isHasEvenNumber = numb.stream()
-                .anyMatch(x -> x % 2 == 0);
-        System.out.println(isHasEvenNumber);
+        List<Integer> listNotEveNumber = Arrays.asList(1, 2, 3, 5);
+        boolean isEvenNumber = listNotEveNumber.stream()
+                .anyMatch(n -> n % 2 == 0);
+        System.out.println(isEvenNumber);
     }
 }
