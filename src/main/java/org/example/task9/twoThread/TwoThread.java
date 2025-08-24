@@ -1,6 +1,6 @@
 package org.example.task9.twoThread;
 
-public class TwoThread {
+public class TwoThread extends Thread {
     public static void main(String[] args) throws InterruptedException {
         Thread t1 = new Thread(() -> {
             for (int i = 0; i < 5; i++) {
