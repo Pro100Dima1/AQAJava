@@ -17,7 +17,7 @@ public class Ex5Tests {
         assertTrue(actualResult);
     }
 
-    @ParameterizedTest(name = "Проверка являтеся ли год високосным")
+    @ParameterizedTest(name = "Проверка НЕ являтеся ли год високосным")
     @ValueSource(ints={2019, 2021, 1900})
     public void testNotLeapYear(int year) {
         boolean actualResult = Main.isLeapYear(year);
