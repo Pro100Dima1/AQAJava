@@ -28,9 +28,9 @@ public class Ex4Tests {
         assertEquals(expectedArray, Main.findMax(array));
     }
 
-//    @Test
-//    public void checkEmptyArray() {
-//        assertThrows(IllegalArgumentException.class, () -> Main.findMax(null),
-//                "Если пришел null, то кидаем исключение IllegalArgumentException");
-//    }
+    @Test
+    public void checkEmptyArray() {
+        assertThrows(NullPointerException.class, () -> Main.findMax(null),
+                "Если пришел null, то кидаем исключение IllegalArgumentException");
+    }
 }
