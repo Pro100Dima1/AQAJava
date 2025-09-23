@@ -10,17 +10,16 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class Ex7Tests {
 
-    @ParameterizedTest(name = "Проверка факториала положительных чисел")
-    @CsvSource({"1, 1", "2, 2", "3, 6", "5, 120", "10, 3628800", "0, 1"})
-    public void testFactorialPositiveNumber(int number, int expectedResult) {
+    @ParameterizedTest(name = "Првоерка фактиориала положительных чисел")
+    @CsvSource({"1, 1", "0, 1", "2, 2", "5, 120", "7, 5040", "10,3628800"})
+    public void checkFactorialPositiveNumber(int number, int expectedResult) {
         int actualResult = Main.factorial(number);
         assertEquals(expectedResult, actualResult);
     }
 
-    @ParameterizedTest(name = "Проверка отрицательных чисел")
-    @ValueSource(ints = {-1, -2, -4})
-    public void testFactorialNegativeNumber(int number) {
-        assertThrows(IllegalArgumentException.class, () -> Main.factorial(number),
-                "Если пришло отрицательное число, то выкидываем исключение");
+    @ParameterizedTest(name = "Првоерка фактиориала отрицательных чисел")
+    @ValueSource(ints = {-1, -2, -3, -4})
+    public void checkFactorialNegativeNumber(int number) {
+        assertThrows(IllegalArgumentException.class, () -> Main.factorial(number));
     }
 }

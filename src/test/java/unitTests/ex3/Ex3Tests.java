@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class Ex3Tests {
 
-    @ParameterizedTest(name = "Тест на проверку переворачивания строки")
-    @ValueSource(strings = {"qwerty", "qazwsx", "SOS", ""})
+    @ParameterizedTest(name = "Тест на проверку переворота строки")
+    @ValueSource(strings = {"qwerty", "qazwsx", "AQA", " "})
     public void testReversString(String word) {
         String expectedResult = new StringBuilder(word).reverse().toString();
         String actualResult = Main.reverse(word);
@@ -20,8 +20,8 @@ public class Ex3Tests {
     }
 
     @Test
-    @DisplayName("Проверка строки на null")
-    public void checkStringIsNull() {
+    @DisplayName("Проверка переворота строки при получении null")
+    public void checkStringIsNull(){
         assertNull(Main.reverse(null));
     }
 }
