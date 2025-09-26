@@ -1,0 +1,16 @@
+package org.expressJava.task11;
+
+public class Ex1 {
+    public static void main(String[] args) {
+
+    }
+
+    public class DebugTask1 {
+        public static void main(String[] args) {
+            int[] numbers = {10, 20, 30, 40, 50};
+            for (int i = 0; i <= numbers.length; i++) {
+                System.out.println(numbers[i]);
+            }
+        }
+    }
+}
