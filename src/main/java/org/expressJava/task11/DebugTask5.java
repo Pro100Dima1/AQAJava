@@ -5,10 +5,12 @@ public class DebugTask5 {
         Person person = new Person("Alice", 25);
         updateAge(person);
         System.out.println("Updated age: " + person.getAge());
+        System.out.println(person.hashCode());
     }
 
     public static void updateAge(Person person) {
         person = new Person(person.getName(), person.getAge() + 1);
+        System.out.println(person.hashCode());
     }
 }
 
