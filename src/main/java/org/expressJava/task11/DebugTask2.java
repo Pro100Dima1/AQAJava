@@ -1,10 +1,5 @@
 package org.expressJava.task11;
 
-public class Ex2 {
-    public static void main(String[] args) {
-
-    }
-
     public class DebugTask2 {
         public static void main(String[] args) {
             int sum = calculateSum(5);
@@ -18,4 +13,6 @@ public class Ex2 {
             return sum;
         }
     }
-}
+
+// тута бесконечный цикл из за неправильного условия в for. надо ++
+

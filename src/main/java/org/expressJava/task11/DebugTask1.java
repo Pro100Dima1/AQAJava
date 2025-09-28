@@ -1,7 +1,5 @@
 package org.expressJava.task11;
 
-
-
     public class DebugTask1 {
         public static void main(String[] args) {
             int[] numbers = {10, 20, 30, 40, 50};
@@ -10,4 +8,6 @@ package org.expressJava.task11;
             }
         }
     }
+
+    // Тута просто вываливаемся за пределы массива ибо у нас length вместо length - 1
 
