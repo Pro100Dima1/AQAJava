@@ -1,10 +1,5 @@
 package org.expressJava.task11;
 
-public class Ex3 {
-    public static void main(String[] args) {
-
-    }
-
     public class DebugTask3 {
         public static void main(String[] args) {
             int i = 1;
@@ -13,4 +8,6 @@ public class Ex3 {
             }
         }
     }
-}
+
+//бесконечный цикл. надо сменить условие в цикле
+

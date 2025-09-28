@@ -1,10 +1,5 @@
 package org.expressJava.task11;
 
-public class Ex4 {
-    public static void main(String[] args) {
-
-    }
-
     public class DebugTask4 {
         public static void main(String[] args) {
             System.out.println(isPalindrome(null));
@@ -14,4 +9,8 @@ public class Ex4 {
             return str.equals(reversed);
         }
     }
-}
+
+// Передаем в вызываемый метод null. так нельзя. ловим NPE
+
+
+
