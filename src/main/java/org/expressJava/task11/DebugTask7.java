@@ -10,15 +10,14 @@ public class DebugTask7 {
         t2.start();
     }
 
-    public static void withdraw(int amount) {
+    public static synchronized void withdraw(int amount) {
         if (balance >= amount) {
             try {
                 Thread.sleep(100);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
             balance -= amount;
             System.out.println("New balance: " + balance);
         }
     }
 }
-// тут надо синхронайзд метод сделать, тот что withdraw

@@ -1,13 +1,10 @@
 package org.expressJava.task11;
 
-    public class DebugTask1 {
-        public static void main(String[] args) {
-            int[] numbers = {10, 20, 30, 40, 50};
-            for (int i = 0; i <= numbers.length; i++) {
-                System.out.println(numbers[i]);
-            }
+public class DebugTask1 {
+    public static void main(String[] args) {
+        int[] numbers = {10, 20, 30, 40, 50};
+        for (int i = 0; i <= numbers.length - 1; i++) {
+            System.out.println(numbers[i]);
         }
     }
-
-    // Тута просто вываливаемся за пределы массива ибо у нас length вместо length - 1
-
+}

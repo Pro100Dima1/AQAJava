@@ -2,15 +2,13 @@ package org.expressJava.task11;
 
 public class DebugTask6 {
     public static void main(String[] args) {
-        int n = 5;
-        countdown(n);
+        countdown(5);
     }
 
     public static void countdown(int n) {
-        for (int i = 0; i != 5; i++) {
-            System.out.println(n);
-            n -= 1;
+        //System.out.println(n);
+        for (int i = n; i > 0; i--) {
+            System.out.println(i);
         }
-        //countdown(n - 1);
     }
 }

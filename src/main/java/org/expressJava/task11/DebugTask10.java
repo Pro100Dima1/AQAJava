@@ -11,10 +11,9 @@ public class DebugTask10 {
             String name = iterator.next();
 
             if (name.startsWith("A")) {
-                iterator.remove(); // Безопасное удаление элемента через итератор
+                iterator.remove();
             }
         }
-
         System.out.println(names);
     }
 }
