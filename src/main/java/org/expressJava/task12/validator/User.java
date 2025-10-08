@@ -1,9 +1,9 @@
 package org.expressJava.task12.validator;
 
 public class User {
-    private int age;
-    private String name;
-    private String email;
+    private final int age;
+    private final String name;
+    private final String email;
 
     public User(int age, String name, String email) {
         this.age = age;
