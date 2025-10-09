@@ -71,4 +71,18 @@ public class UserValidatorTest {
         User user = new User(100, "Sam", "22@mail.com");
         assertDoesNotThrow(() -> userValidator.checkValidationAge(user));
     }
+
+    @Test
+    @DisplayName("Проверка валидации валидного имейла")
+    public void checkValidEmail(){
+        User user = new User(100, "Sam", "22@mail.com");
+        assertDoesNotThrow(() -> userValidator.checkValidationEmail(user));
+    }
+
+    @Test
+    @DisplayName("Проверка валидации невалидного имейла")
+    public void checkInvalidEmail(){
+        User user = new User(100, "Sam", "22.com");
+        assertThrows(InvalidUserException.class, () -> userValidator.checkValidationEmail(user));
+    }
 }
