@@ -50,7 +50,7 @@ public class UserValidator {
 
     public static boolean checkValidationAge(User user) throws InvalidUserException {
         boolean ageIsValid = false;
-        if (user.getAge() > 18 && user.getAge() < 100) {
+        if (user.getAge() > 18 || user.getAge() < 100) {
             ageIsValid = true;
             System.out.println("Check Age Succsess");
         } else {
