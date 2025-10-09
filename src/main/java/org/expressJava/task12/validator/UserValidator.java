@@ -10,28 +10,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserValidator {
-
     public static void main(String[] args) {
-        boolean validationEnabled = true;
+        User user1 = new User(25, "", "22@mail.com");
+        validate(user1, true);
+    }
+
+    public static void validate(User user, boolean enabled) {
+        boolean validationEnabled = enabled;
         if (validationEnabled) {
-            User user1 = new User(19, "Bob", "bob@mail.com");
             try {
-                System.out.println(checkValidationName(user1));
+                System.out.println(checkValidationName(user));
             } catch (InvalidUserException e) {
                 System.err.println(e.getMessage());
             }
             try {
-                System.out.println(checkValidationAge(user1));
+                System.out.println(checkValidationAge(user));
             } catch (InvalidUserException e) {
                 System.err.println(e.getMessage());
             }
             try {
-                System.out.println(checkValidationEmail(user1));
+                System.out.println(checkValidationEmail(user));
             } catch (InvalidUserException e) {
                 System.err.println(e.getMessage());
             }
-        }
-        else {
+        } else {
             System.out.println("Validation is not working");
         }
     }
@@ -39,18 +41,23 @@ public class UserValidator {
     public static boolean checkValidationName(User user) throws InvalidUserException {
 
         boolean nameIsValid = false;
-        if (user.getName().charAt(0) == user.getName().toUpperCase().charAt(0) && !user.getName().equals(" ")) {
-            nameIsValid = true;
-            System.out.println("Check Name Success");
+        if (!user.getName().isEmpty()) {
+            char firstChar = user.getName().charAt(0);
+            if (firstChar == Character.toUpperCase(firstChar)) {
+                nameIsValid = true;
+                System.out.println("Check Name Success");
+            } else {
+                throw new InvalidUserException("The name must start with a capital letter");
+            }
         } else {
-            throw new InvalidUserException("The name must be non-empty and start with a capital letter");
+            throw new InvalidUserException("The name cannot be empty");
         }
         return nameIsValid;
     }
 
     public static boolean checkValidationAge(User user) throws InvalidUserException {
         boolean ageIsValid = false;
-        if (user.getAge() > 18 || user.getAge() < 100) {
+        if (user.getAge() >= 18 && user.getAge() <= 100) {
             ageIsValid = true;
             System.out.println("Check Age Succsess");
         } else {
