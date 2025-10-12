@@ -6,10 +6,6 @@ import java.util.List;
 public class GradeService<T extends Number> {
     private final List<StudentGrade<T>> gradeArray = new ArrayList<>();
 
-    public static void main(String[] args) {
-
-    }
-
     public synchronized void addGrade(StudentGrade<T> grade) throws InvalidGradeException {
         if (grade.getGrade().intValue() < 0) {
             throw new InvalidGradeException("The rating cannot be negative");
@@ -23,5 +19,9 @@ public class GradeService<T extends Number> {
                 .mapToInt(s -> s.getGrade().intValue())
                 .average()
                 .orElseThrow(() -> new IllegalArgumentException("An invalid argument was entered in the calculation"));
+    }
+
+    public int returnListGrade(){
+        return gradeArray.size();
     }
 }
