@@ -13,16 +13,16 @@ public class Movie {
         return title;
     }
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Movie movie = (Movie) o;
-//        return Objects.equals(title, movie.title);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hashCode(title);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Movie movie = (Movie) o;
+        return Objects.equals(title, movie.title);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(title);
+    }
 }
