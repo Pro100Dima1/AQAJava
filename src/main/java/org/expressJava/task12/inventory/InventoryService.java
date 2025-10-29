@@ -7,14 +7,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InventoryService {
-    boolean isInventoryOpem = false;
+    boolean isInventoryOpen = false;
     public Map<String, List<Product>> products = new HashMap<>();
 
     public void addProduct(Product product) {
-        if (!isInventoryOpem) {
+        if (!isInventoryOpen) {
             return;
         } else {
-            products.putIfAbsent(product.getCategory(), new ArrayList<>());
+            products.computeIfAbsent(product.getCategory(), k -> new ArrayList<>())
+                    .add(product);
         }
     }
 
@@ -23,14 +24,20 @@ public class InventoryService {
         if (products == null || products.isEmpty()) {
             throw new OutOfStockException("Товары в категории \"" + category + "\" отсутствуют");
         }
-        return product.remove(0); // извлекаем первый доступный
+        return product.remove(0);
     }
 
     public List<Product> filterByPrice(double minPrice) {
-        return products.values().stream().flatMap(List::stream).filter(p -> p.getPrice() >= minPrice).collect(Collectors.toList());
+        return products.values().stream().
+                flatMap(List::stream).filter(p -> p.getPrice() >= minPrice)
+                .collect(Collectors.toList());
     }
 
     public List<Product> getAllByCategory(String category) {
         return new ArrayList<>(products.getOrDefault(category, List.of()));
+    }
+
+    public void setInventoryOpen(boolean open) {
+        this.isInventoryOpen = open;
     }
 }
