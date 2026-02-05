@@ -1,33 +1,33 @@
 package org.expressJava.task2;
 
 public class Book {
-String title;
-String author;
+    String title;
+    String author;
 
-Book(String title, String author){
-    this.author = author;
-    this.title = title;
-}
+    Book(String title, String author) {
+        this.author = author;
+        this.title = title;
+    }
 
-String getTitle(){
-    return this.title;
-}
+    String getTitle() {
+        return this.title;
+    }
 
-String getAuthor(){
-    return this.author;
-}
+    String getAuthor() {
+        return this.author;
+    }
 
-void setTitle(String title){
-    this.title = title;
-}
+    void setTitle(String title) {
+        this.title = title;
+    }
 
-void setAuthor(String author){
-    this.author = author;
-}
+    void setAuthor(String author) {
+        this.author = author;
+    }
 
-void printInfo(){
-    System.out.println("Автора: " + this.author + ". Название книги: " + this.title);
-}
+    void printInfo() {
+        System.out.println("Автора: " + this.author + ". Название книги: " + this.title);
+    }
 }
 
 
