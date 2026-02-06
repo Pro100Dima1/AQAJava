@@ -5,6 +5,6 @@ public class Main {
         PaymentProcessor paymentProcessor = new PaymentProcessor();
         BitcoinPayment bitcoinPayment = new BitcoinPayment();
 
-        paymentProcessor.processPayment(bitcoinPayment);
+        paymentProcessor.processPayment(bitcoinPayment, 2.2);
     }
 }

@@ -1,15 +1,11 @@
 package org.cleanCode.task1.dry;
 
 public class MathOperations {
-    public int summations(int a, int b) {
-        return a + b;
-    }
-
-    public int summations(int a, int b, int c) {
-        return a + b + c;
-    }
-
-    public int summations(int a, int b, int c, int d) {
-        return a + b + c + d;
+    public int summations(int... numbers) {
+        int sum = 0;
+        for (int n : numbers) {
+            sum += n;
+        }
+        return sum;
     }
 }

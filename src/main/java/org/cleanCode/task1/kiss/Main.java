@@ -1,4 +1,4 @@
-package org.cleanCode.task1.kiiss;
+package org.cleanCode.task1.kiss;
 
 public class Main {
     public static void main(String[] args) {

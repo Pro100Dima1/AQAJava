@@ -1,4 +1,4 @@
-package org.cleanCode.task1.kiiss;
+package org.cleanCode.task1.kiss;
 
 public class DiscountCalculator {
     public double calculateDiscount(double price, boolean isLoyalCustomer, boolean isFirstPurchase, boolean hasCoupon) {
