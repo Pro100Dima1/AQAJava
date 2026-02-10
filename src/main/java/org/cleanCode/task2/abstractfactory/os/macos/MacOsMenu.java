@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory.macos;
+package org.cleanCode.task2.abstractfactory.os.macos;
 
-import org.cleanCode.task2.abstractfactory.Menu;
+import org.cleanCode.task2.abstractfactory.os.Menu;
 
 public class MacOsMenu implements Menu {
     @Override

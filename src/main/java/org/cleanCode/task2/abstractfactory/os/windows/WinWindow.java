@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory.windows;
+package org.cleanCode.task2.abstractfactory.os.windows;
 
-import org.cleanCode.task2.abstractfactory.Window;
+import org.cleanCode.task2.abstractfactory.os.Window;
 
 public class WinWindow implements Window {
     @Override

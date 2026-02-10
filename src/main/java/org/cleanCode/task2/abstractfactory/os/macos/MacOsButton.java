@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory.macos;
+package org.cleanCode.task2.abstractfactory.os.macos;
 
-import org.cleanCode.task2.abstractfactory.Button;
+import org.cleanCode.task2.abstractfactory.os.Button;
 
 public class MacOsButton implements Button {
     @Override

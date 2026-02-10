@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory.windows;
+package org.cleanCode.task2.abstractfactory.os.windows;
 
-import org.cleanCode.task2.abstractfactory.Button;
+import org.cleanCode.task2.abstractfactory.os.Button;
 
 public class WinButton implements Button {
     @Override

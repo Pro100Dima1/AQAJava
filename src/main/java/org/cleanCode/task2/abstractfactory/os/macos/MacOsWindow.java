@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory.macos;
+package org.cleanCode.task2.abstractfactory.os.macos;
 
-import org.cleanCode.task2.abstractfactory.Window;
+import org.cleanCode.task2.abstractfactory.os.Window;
 
 public class MacOsWindow implements Window {
     @Override

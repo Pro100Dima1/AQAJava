@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory;
+package org.cleanCode.task2.abstractfactory.os;
 
-import org.cleanCode.task2.abstractfactory.windows.WinUiFactory;
+import org.cleanCode.task2.abstractfactory.os.windows.WinUiFactory;
 
 public class WindowsUI {
     public static void main(String[] args) {

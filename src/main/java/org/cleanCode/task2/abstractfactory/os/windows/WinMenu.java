@@ -1,6 +1,6 @@
-package org.cleanCode.task2.abstractfactory.windows;
+package org.cleanCode.task2.abstractfactory.os.windows;
 
-import org.cleanCode.task2.abstractfactory.Menu;
+import org.cleanCode.task2.abstractfactory.os.Menu;
 
 public class WinMenu implements Menu {
     @Override

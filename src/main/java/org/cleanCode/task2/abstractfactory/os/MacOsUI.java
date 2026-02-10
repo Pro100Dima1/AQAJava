@@ -1,7 +1,6 @@
-package org.cleanCode.task2.abstractfactory;
+package org.cleanCode.task2.abstractfactory.os;
 
-import org.cleanCode.task2.abstractfactory.macos.MacOsButton;
-import org.cleanCode.task2.abstractfactory.macos.MacOsUiFactory;
+import org.cleanCode.task2.abstractfactory.os.macos.MacOsUiFactory;
 
 public class MacOsUI {
     public static void main(String[] args) {
