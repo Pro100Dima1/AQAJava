@@ -9,7 +9,7 @@ public class MilesToKilometersAdapter implements Distance {
 
     @Override
     public void distance(int km) {
-        System.out.println("Converting ,iles ti kilometers");
+        System.out.println("Converting miles to kilometers");
         miles.distance(km);
     }
 }
