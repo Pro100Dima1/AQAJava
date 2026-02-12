@@ -1,5 +1,5 @@
 package org.cleanCode.task2.adapter.pdf;
 
 public interface DocumentProcessor {
-    void process();
+    void process(String fileName);
 }

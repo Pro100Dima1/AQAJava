@@ -1,9 +1,15 @@
 package org.cleanCode.task2.adapter.pdf;
 
-public class DocumentAdapter implements DocumentProcessor{
+public class DocumentAdapter implements DocumentProcessor {
+    private PDFProcessor pdfProcessor;
+
+    public DocumentAdapter(PDFProcessor pdfProcessor) {
+        this.pdfProcessor = pdfProcessor;
+    }
 
     @Override
-    public void process() {
-
+    public void process(String fileName) {
+        System.out.println("Converting PDF to DOC format...");
+        pdfProcessor.processPDF(fileName);
     }
 }
