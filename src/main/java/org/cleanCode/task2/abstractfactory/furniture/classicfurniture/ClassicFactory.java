@@ -6,6 +6,7 @@ import org.cleanCode.task2.abstractfactory.furniture.Table;
 import org.cleanCode.task2.abstractfactory.furniture.modernfurniture.ModernTable;
 
 public class ClassicFactory implements FurnitureFactory {
+
     @Override
     public Chair getChair() {
         return new ClassicChair();

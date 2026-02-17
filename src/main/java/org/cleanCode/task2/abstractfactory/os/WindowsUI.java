@@ -9,10 +9,8 @@ public class WindowsUI {
         Menu winMenu = elementFactory.getMenu();
         Window winWindow = elementFactory.getWindow();
 
-        System.out.println("Create UI start...");
-
         winButton.createButton();
-        winMenu.createMenu();
         winWindow.createWindow();
+        winMenu.createMenu();
     }
 }

@@ -1,6 +1,7 @@
 package org.cleanCode.task2.facade.door;
 
 public class DoorFacade {
+
     private DoorClose doorClose;
     private DoorLock doorLock;
     private DoorOpen doorOpen;
@@ -11,9 +12,9 @@ public class DoorFacade {
         this.doorOpen = doorOpen;
     }
 
-    public void prepareDoor() {
-        doorClose.closeDoor();
-        doorLock.lockDoor();
+    public void preapereDoor() {
         doorOpen.openDoor();
+        doorLock.lockDoor();
+        doorClose.closeDoor();
     }
 }

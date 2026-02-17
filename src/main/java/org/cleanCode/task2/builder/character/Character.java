@@ -1,6 +1,7 @@
 package org.cleanCode.task2.builder.character;
 
 public class Character {
+
     private int hp;
     private int armor;
     private int damage;
@@ -13,28 +14,12 @@ public class Character {
         this.magicType = magicType;
     }
 
-    public Character(CharBuilder charBuilder) {
-        this.hp = charBuilder.hp;
-        this.armor = charBuilder.armor;
-        this.damage = charBuilder.damage;
-        this.magicType = charBuilder.magicType;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public void setArmor(int armor) {
-        this.armor = armor;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
-
-    public void setMagicType(String magicType) {
-        this.magicType = magicType;
-    }
+    public Character(CharBuilder charBuilder){
+       this.armor = charBuilder.armor;
+       this.damage = charBuilder.damage;
+       this.hp = charBuilder.hp;
+       this.magicType = charBuilder.magicType;
+   }
 
     @Override
     public String toString() {
@@ -46,7 +31,7 @@ public class Character {
                 '}';
     }
 
-    static class CharBuilder{
+    static class CharBuilder {
         private int hp;
         private int armor;
         private int damage;
@@ -71,7 +56,6 @@ public class Character {
             this.magicType = magicType;
             return this;
         }
-
         public Character build(){
             return new Character(this);
         }

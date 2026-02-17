@@ -4,16 +4,16 @@ public class Main {
     public static void main(String[] args) {
         WeaponFactory weaponFactory;
 
-        String swordType = "150";
+        String damage = "100";
 
-        if (swordType.equalsIgnoreCase("100")) {
-            weaponFactory = new SwordFactory();
-        } else if (swordType.equalsIgnoreCase("150")) {
+        if (damage.equalsIgnoreCase("100")) {
             weaponFactory = new BowFactory();
-        } else if (swordType.equalsIgnoreCase("500")) {
+        } else if (damage.equalsIgnoreCase("50")) {
+            weaponFactory = new SwordFactory();
+        } else if (damage.equalsIgnoreCase("200")) {
             weaponFactory = new GunFactory();
         } else {
-            throw new RuntimeException("Not found weapon for create");
+            throw new RuntimeException("Weapon not found");
         }
         weaponFactory.planWeapon();
     }

@@ -7,6 +7,7 @@ import org.cleanCode.task2.abstractfactory.os.Window;
 
 public class MacOsUiFactory implements ElementFactory {
 
+
     @Override
     public Button getButton() {
         return new MacOsButton();

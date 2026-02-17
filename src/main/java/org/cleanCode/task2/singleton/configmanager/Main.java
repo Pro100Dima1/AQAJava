@@ -3,14 +3,12 @@ package org.cleanCode.task2.singleton.configmanager;
 public class Main {
 
     public static void main(String[] args) {
-        ConfigurationManager config1 = ConfigurationManager.getInstance();
+        ConfigurationManager configurationManager = ConfigurationManager.getInstance();
 
-        config1.urlDB = "C:\\Users\\Public";
-        config1.userName = "AEZAKMI";
-        config1.userPassword = "Qazwsx934!";
+        configurationManager.urlDB = "C:\\common\\app";
+        configurationManager.userPassword = "QAZWSXEDC";
+        configurationManager.userName = "Petya";
 
-        config1.diaplayConfigOnfo();
-
+        configurationManager.displayInfo();
     }
-
 }

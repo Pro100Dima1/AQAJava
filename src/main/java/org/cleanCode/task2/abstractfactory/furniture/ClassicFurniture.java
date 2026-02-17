@@ -8,8 +8,6 @@ public class ClassicFurniture {
         Chair classicChair = furnitureFactory.getChair();
         Table classicTable = furnitureFactory.getTable();
 
-        System.out.println("STAART : ");
-
         classicChair.createChair();
         classicTable.createTable();
     }

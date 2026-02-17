@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         Logger logger = Logger.getInstance();
 
-        logger.exceptions = "Нет никаких exceptionss";
-        logger.displayLoggerInfo();
+        logger.exceptions = "Not found exceptions";
+        logger.displayInfo();
     }
 }

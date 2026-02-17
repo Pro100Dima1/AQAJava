@@ -7,6 +7,7 @@ public class Main {
         DoorClose doorClose = new DoorClose();
 
         DoorFacade doorFacade = new DoorFacade(doorClose, doorLock, doorOpen);
-        doorFacade.prepareDoor();
+
+        doorFacade.preapereDoor();
     }
 }

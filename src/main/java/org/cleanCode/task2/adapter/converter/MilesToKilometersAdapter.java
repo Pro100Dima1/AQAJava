@@ -1,6 +1,7 @@
 package org.cleanCode.task2.adapter.converter;
 
-public class MilesToKilometersAdapter implements Distance {
+public class MilesToKilometersAdapter implements Distance  {
+
     private Miles miles;
 
     public MilesToKilometersAdapter(Miles miles) {
@@ -10,6 +11,6 @@ public class MilesToKilometersAdapter implements Distance {
     @Override
     public void distance(int km) {
         System.out.println("Converting miles to kilometers");
-        miles.distance(km);
+        miles.distance(200);
     }
 }

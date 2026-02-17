@@ -1,6 +1,7 @@
 package org.cleanCode.task2.facade.smarthouse;
 
 public class SmartHousFacade {
+
     private Condicioner condicioner;
     private Light light;
     private SecuritySystem securitySystem;
@@ -11,15 +12,15 @@ public class SmartHousFacade {
         this.securitySystem = securitySystem;
     }
 
-    public void allOff() {
-        condicioner.condicionerOff();
-        light.lightOff();
-        securitySystem.securitySystemOff();
-    }
-
-    public void allOn() {
+    public void  allOn(){
         condicioner.condicionerOn();
         light.lightOn();
-        securitySystem.securitySystemOn();
+        securitySystem.securityOn();
+    }
+
+    public void allOff(){
+        condicioner.condicionerOff();
+        light.lightOff();
+        securitySystem.securityOff();
     }
 }

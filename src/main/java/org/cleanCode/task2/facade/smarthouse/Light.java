@@ -6,6 +6,6 @@ public class Light {
     }
 
     public void lightOff() {
-        System.out.println("Loght OFF");
+        System.out.println("Light OFF");
     }
 }

@@ -1,8 +1,9 @@
 package org.cleanCode.task2.fabricmethod.weapon;
 
 public class GunFactory extends WeaponFactory{
+
     @Override
-    public Weapon createWeapon() {
+    Weapon createWeapon() {
         return new Gun();
     }
 }
