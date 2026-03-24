@@ -1,0 +1,385 @@
+### PreConditiobs:
+### Get Admin Token: Basic YWRtaW46YWRtaW4=
+POST http://localhost:4111/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "Pro100Dima",
+  "password": "Qa9344020!"
+}
+
+### Create user by Admin
+### Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+POST http://localhost:4111/api/v1/admin/users
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "username": "Pro100Dima",
+  "password": "Qa9344020!",
+  "role": "USER"
+}
+
+### Check User Info
+GET http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+### Check User Accounts
+GET http://localhost:4111/api/v1/customer/accounts
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+### Create accounts
+POST http://localhost:4111/api/v1/accounts
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{}
+
+
+### Name Change verification Cases
+### 1)Two words consisting of letters, separated by a space
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "Dima Orlov"
+}
+
+### 2)One word of letters without spaces
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "DimaOrlov"
+}
+
+### 3)One word with a space at the end after the word
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "DimaOrlov "
+}
+
+### 4)No words, just 1 space
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": " "
+}
+
+### 5)Two words of characters, with a space
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "!@!@!@ !@!@!"
+}
+
+### 6)Two words of numbers, with a space
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "12345 6789"
+}
+
+### 7)Two words with numbers and symbols, with a space
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "123!!!45 67@@@89"
+}
+
+### 8)Three words with spaces between them
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "Dima Orlov Kerpich"
+}
+
+### 9)Two words. One of letters, the other of numbers
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "Dima 934435"
+}
+
+### 10)Two words with spaces in Russian letters
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "Дима Орлов"
+}
+
+### 11)Two words in English letters with two spaces
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": "Dima  Orlov"
+}
+
+### 12)Empty name field
+PUT http://localhost:4111/api/v1/customer/profile
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "name": ""
+}
+
+
+###Deposit cases
+###1)Make a deposit of 3000
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 3000
+}
+
+###2)Make a deposit of -100
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": -100
+}
+
+###3)Make a deposit of 0
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 0
+}
+
+###4)Make a deposit of 4999
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 4999
+}
+
+###5)Make a deposit of 5000
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 5000
+}
+
+###6)Make a deposit of 5001
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 5001
+}
+
+###7)Make a positive deposit with a decimal part
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 2550.1
+}
+
+###8)Make a deposit of 0.0001
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 0.0001
+}
+
+###9)Make a deposit to an account with a non-existent ID
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 25,
+  "balance": 3000
+}
+
+###10)Make a deposit to someone else's account
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "id": 1,
+  "balance": 3000
+}
+
+###Cases of transferring money from one account to another
+###1)Transfer 10000
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 10000
+}
+
+###2)Transfer 0
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 0
+}
+
+###3)Transfer -100
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": -100
+}
+
+###4)Transfer 5000
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 5000
+}
+
+###5)Transfer 10001
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 10001
+}
+
+###6)Transfer of more than the sender's balance amount
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 10000
+}
+
+###7)Transfer to a non-existent account
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 299,
+  "amount": 10000
+}
+
+###8)Transfer 200.1
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 200.1
+}
+
+###9)Transfer an amount equal to the sender's balance
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 5348.999999999998
+}
+
+###10)Transfer 2000 from an account with a zero balance
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 2000
+}
+
+###11)Transfer to someone else's account
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4=
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 2000
+}
+
+
+###12)Transfer from a non-existent account
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 177,
+  "receiverAccountId": 2,
+  "amount": 2000
+}
+
+
+
