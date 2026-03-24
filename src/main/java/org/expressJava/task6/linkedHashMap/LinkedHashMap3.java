@@ -14,6 +14,7 @@ public class LinkedHashMap3 {
         while (true) {
             String user = scanner.nextLine();
             int id = scanner.nextInt();
+            scanner.nextLine();
             System.out.println(addUser(user, id));
             if (userHistory.size() > MAX_SIZE) {
                 upDateLastElement();
