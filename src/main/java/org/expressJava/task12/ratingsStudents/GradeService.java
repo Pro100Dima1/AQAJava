@@ -4,24 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GradeService<T extends Number> {
-    private final List<StudentGrade<T>> gradeArray = new ArrayList<>();
+    List<StudentGrade> grades = new ArrayList<>();
 
     public synchronized void addGrade(StudentGrade<T> grade) throws InvalidGradeException {
-        if (grade.getGrade().intValue() < 0) {
-            throw new InvalidGradeException("The rating cannot be negative");
+        if (grade.getRank().intValue() < 0) {
+            throw new InvalidGradeException("Rank is not valid");
         }
-        gradeArray.add(grade);
+        grades.add(grade);
     }
 
-    public synchronized int averageGrade(String object) {
-        return (int) gradeArray.stream()
-                .filter(s -> s.getSubject().equalsIgnoreCase(object))
-                .mapToInt(s -> s.getGrade().intValue())
+    public synchronized int avgRank(String object) throws InvalidGradeException {
+       return (int)grades.stream()
+                .filter(g -> g.getObject().equals(object))
+                .mapToInt(g -> g.getRank().intValue())
                 .average()
-                .orElseThrow(() -> new IllegalArgumentException("An invalid argument was entered in the calculation"));
-    }
-
-    public int returnListGrade(){
-        return gradeArray.size();
+                .orElseThrow(() -> new InvalidGradeException("No rank found"));
     }
 }

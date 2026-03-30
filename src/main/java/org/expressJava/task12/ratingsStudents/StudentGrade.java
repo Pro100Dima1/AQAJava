@@ -1,25 +1,25 @@
 package org.expressJava.task12.ratingsStudents;
 
 public class StudentGrade<T extends Number> {
-    private final String nameStudent;
-    private final String subject;
-    private final T grade;
+    private String name;
+    private String object;
+    private T rank;
 
-    public StudentGrade(String nameStudent, String subject, T grade) {
-        this.nameStudent = nameStudent;
-        this.subject = subject;
-        this.grade = grade;
+    public StudentGrade(String name, String object, T rank) {
+        this.name = name;
+        this.object = object;
+        this.rank = rank;
     }
 
-    public String getNameStudent() {
-        return nameStudent;
+    public String getName() {
+        return name;
     }
 
-    public String getSubject() {
-        return subject;
+    public String getObject() {
+        return object;
     }
 
-    public T getGrade() {
-        return grade;
+    public T getRank() {
+        return rank;
     }
 }
