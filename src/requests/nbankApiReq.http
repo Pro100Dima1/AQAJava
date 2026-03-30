@@ -177,14 +177,14 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
   "balance": 0
 }
 
-###4)Make a deposit of 4999
+###4)Make a deposit of 4999.99
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
 Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 
 {
   "id": 1,
-  "balance": 4999
+  "balance": 4999.99
 }
 
 ###5)Make a deposit of 5000
@@ -197,14 +197,14 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
   "balance": 5000
 }
 
-###6)Make a deposit of 5001
+###6)Make a deposit of 5000.01
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
 Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 
 {
   "id": 1,
-  "balance": 5001
+  "balance": 5000.01
 }
 
 ###7)Make a positive deposit with a decimal part
@@ -245,6 +245,16 @@ Authorization: Basic YWRtaW46YWRtaW4=
 {
   "id": 1,
   "balance": 3000
+}
+
+###11)Make a deposit of 0.01
+POST http://localhost:4111/api/v1/accounts/deposit
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "id": 1,
+  "balance": 0.01
 }
 
 ###Cases of transferring money from one account to another
@@ -292,7 +302,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
   "amount": 5000
 }
 
-###5)Transfer 10001
+###5)Transfer 10000.01
 POST http://localhost:4111/api/v1/accounts/transfer
 Content-Type: application/json
 Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
@@ -300,7 +310,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 {
   "senderAccountId": 1,
   "receiverAccountId": 2,
-  "amount": 10001
+  "amount": 10000.01
 }
 
 ###6)Transfer of more than the sender's balance amount
@@ -379,6 +389,28 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
   "senderAccountId": 177,
   "receiverAccountId": 2,
   "amount": 2000
+}
+
+###13)Transfer 9999.99
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 9999.99
+}
+
+###14)Transfer 0.01
+POST http://localhost:4111/api/v1/accounts/transfer
+Content-Type: application/json
+Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+
+{
+  "senderAccountId": 1,
+  "receiverAccountId": 2,
+  "amount": 0.01
 }
 
 
