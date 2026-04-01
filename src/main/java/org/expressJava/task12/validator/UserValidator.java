@@ -6,76 +6,66 @@ package org.expressJava.task12.validator;
 //4 Управление валидацией: Валидация данных должна происходить только если флаг validationEnabled установлен в true.
 //5 Исключения: При обнаружении невалидных данных необходимо выбрасывать InvalidUserException.
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class UserValidator {
     public static void main(String[] args) {
-        User user1 = new User(25, "", "22@mail.com");
-        validate(user1, true);
+        User userVitya = new User("Vitya", 18, "oao@yandex.ru");
+        validate(userVitya, true);
     }
 
     public static void validate(User user, boolean enabled) {
-        boolean validationEnabled = enabled;
-        if (validationEnabled) {
+        if (enabled) {
             try {
-                System.out.println(checkValidationName(user));
+                checkValidationName(user);
             } catch (InvalidUserException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
             try {
-                System.out.println(checkValidationAge(user));
+                checkValidationAge(user);
             } catch (InvalidUserException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
             try {
-                System.out.println(checkValidationEmail(user));
+                checkValidationEmail(user);
             } catch (InvalidUserException e) {
-                System.err.println(e.getMessage());
+                System.out.println(e.getMessage());
             }
         } else {
-            System.out.println("Validation is not working");
+            System.out.println("Validation is not enabled");
         }
     }
 
     public static boolean checkValidationName(User user) throws InvalidUserException {
-
-        boolean nameIsValid = false;
-        if (!user.getName().isEmpty()) {
-            char firstChar = user.getName().charAt(0);
-            if (firstChar == Character.toUpperCase(firstChar)) {
-                nameIsValid = true;
-                System.out.println("Check Name Success");
+        boolean isValidName = false;
+        if (user.getName() != null && !user.getName().isEmpty()) {
+            if (user.getName().charAt(0) == user.getName().toUpperCase().charAt(0)) {
+                isValidName = true;
+                System.out.println("Name is valid");
             } else {
-                throw new InvalidUserException("The name must start with a capital letter");
+                throw new InvalidUserException("Name is not valid");
             }
-        } else {
-            throw new InvalidUserException("The name cannot be empty");
         }
-        return nameIsValid;
+        return isValidName;
     }
 
     public static boolean checkValidationAge(User user) throws InvalidUserException {
-        boolean ageIsValid = false;
+        boolean isValidAge = false;
         if (user.getAge() >= 18 && user.getAge() <= 100) {
-            ageIsValid = true;
-            System.out.println("Check Age Succsess");
+            isValidAge = true;
+            System.out.println("Age is valid");
         } else {
-            throw new InvalidUserException("The age limit is between 18 and 100 years old.");
+            throw new InvalidUserException("Age is not valid");
         }
-        return ageIsValid;
+        return isValidAge;
     }
 
     public static boolean checkValidationEmail(User user) throws InvalidUserException {
-        boolean emailIsValid = false;
-        Pattern pattern = Pattern.compile("^[\\w-\\.]+@[\\w-]+(\\.[\\w-]+)*\\.[a-z]{2,}$");
-        Matcher matcher = pattern.matcher(user.getEmail());
-        if (matcher.matches()) {
-            emailIsValid = true;
-            System.out.println("Check Email Succsess");
+        boolean isValidEmail = false;
+        if (user.getEmail().matches("[\\w-.]+@[\\w-]+(.[\\w-]+)*.[a-z]{2,}$")) {
+            isValidEmail = true;
+            System.out.println("Email is valid");
         } else {
-            throw new InvalidUserException("Email must comply with the standard email format.");
+            throw new InvalidUserException("Email is not valid");
         }
-        return emailIsValid;
+        return isValidEmail;
     }
 }

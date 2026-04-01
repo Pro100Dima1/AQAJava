@@ -9,7 +9,7 @@ public class HashSet3 {
         System.out.println(res);
     }
 
-    public static Set<String> returnSet(List list) {
+    public static Set<String> returnSet(List<String> list) {
         HashSet<String> setString = new HashSet<>();
         setString.addAll(list);
         return setString;

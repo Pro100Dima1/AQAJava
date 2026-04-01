@@ -1,7 +1,7 @@
-package org.expressJava.task12.ratingsMovie;
+package org.expressJava.complexTask.movieRating;
 
 public class Rating<T extends Number> {
-    private T value;
+    private final T value;
 
     public Rating(T value) {
         this.value = value;

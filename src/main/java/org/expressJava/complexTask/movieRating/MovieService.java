@@ -1,0 +1,5 @@
+package org.expressJava.complexTask.movieRating;
+
+public class MovieService {
+
+}

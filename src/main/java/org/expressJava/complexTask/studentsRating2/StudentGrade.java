@@ -1,4 +1,4 @@
-package org.expressJava.task12.ratingsStudents;
+package org.expressJava.complexTask.studentsRating2;
 
 public class StudentGrade<T extends Number> {
     private String name;
@@ -11,7 +11,7 @@ public class StudentGrade<T extends Number> {
         this.rank = rank;
     }
 
-    public String getName() {
+    public String getName3() {
         return name;
     }
 
