@@ -4,8 +4,8 @@ POST http://localhost:4111/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username": "Pro100Dima",
-  "password": "Qa9344020!"
+  "username": "Dima12347",
+  "password": "Qa9344020!!"
 }
 
 ### Create user by Admin
@@ -15,15 +15,15 @@ Content-Type: application/json
 Authorization: Basic YWRtaW46YWRtaW4=
 
 {
-  "username": "Pro100Dima",
-  "password": "Qa9344020!",
+  "username": "Dima12347",
+  "password": "Qa9344020!!",
   "role": "USER"
 }
 
 ### Check User Info
 GET http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ6UWE5MzQ0MDIwISE=
 ### Check User Accounts
 GET http://localhost:4111/api/v1/customer/accounts
 Content-Type: application/json
@@ -31,7 +31,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### Create accounts
 POST http://localhost:4111/api/v1/accounts
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {}
 
@@ -40,7 +40,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 1)Two words consisting of letters, separated by a space
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "Dima Orlov"
@@ -49,7 +49,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 2)One word of letters without spaces
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "DimaOrlov"
@@ -58,7 +58,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 3)One word with a space at the end after the word
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "DimaOrlov "
@@ -67,7 +67,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 4)No words, just 1 space
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": " "
@@ -76,7 +76,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 5)Two words of characters, with a space
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "!@!@!@ !@!@!"
@@ -85,7 +85,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 6)Two words of numbers, with a space
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "12345 6789"
@@ -94,7 +94,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 7)Two words with numbers and symbols, with a space
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "123!!!45 67@@@89"
@@ -103,7 +103,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 8)Three words with spaces between them
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "Dima Orlov Kerpich"
@@ -112,7 +112,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 9)Two words. One of letters, the other of numbers
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "Dima 934435"
@@ -121,7 +121,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 10)Two words with spaces in Russian letters
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "Дима Орлов"
@@ -130,7 +130,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 11)Two words in English letters with two spaces
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": "Dima  Orlov"
@@ -139,7 +139,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ### 12)Empty name field
 PUT http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "name": ""
@@ -150,7 +150,7 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ###1)Make a deposit of 3000
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 {
   "id": 1,
@@ -207,15 +207,15 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
   "balance": 5000.01
 }
 
-###7)Make a positive deposit with a decimal part
-POST http://localhost:4111/api/v1/accounts/deposit
-Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
-
-{
-  "id": 1,
-  "balance": 2550.1
-}
+####7)Make a positive deposit with a decimal part
+#POST http://localhost:4111/api/v1/accounts/deposit
+#Content-Type: application/json
+#Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+#
+#{
+#  "id": 1,
+#  "balance": 2550.1
+#}
 
 ###8)Make a deposit of 0.0001
 POST http://localhost:4111/api/v1/accounts/deposit
