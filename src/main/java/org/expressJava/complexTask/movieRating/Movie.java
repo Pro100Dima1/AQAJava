@@ -1,9 +1,7 @@
-package org.expressJava.task12.ratingsMovie;
-
-import java.util.Objects;
+package org.expressJava.complexTask.movieRating;
 
 public class Movie {
-    private String title;
+    private final String title;
 
     public Movie(String title) {
         this.title = title;

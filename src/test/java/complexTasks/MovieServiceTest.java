@@ -18,7 +18,7 @@ public class MovieServiceTest {
         Movie movie = new Movie("Inception");
         service.addRating(movie, new Rating<>(9));
         service.addRating(movie, new Rating<>(7));
-        assertEquals(8.0, service.getAverageRating(movie));
+        assertEquals(8.0, service.getAverageRatingMovie(movie));
     }
 
     @Test
@@ -44,6 +44,6 @@ public class MovieServiceTest {
     void testAverageWithoutRatings() {
         MovieService<Integer> service = new MovieService<>();
         Movie movie = new Movie("Empty");
-        assertThrows(IllegalArgumentException.class, () -> service.getAverageRating(movie));
+        assertThrows(IllegalArgumentException.class, () -> service.getAverageRatingMovie(movie));
     }
 }

@@ -1,26 +1,26 @@
 package org.expressJava.task12.inventory;
 
 public class Product {
-    private final String name;
-    private final double price;
-    private final String category;
+    private String name;
+    private String category;
+    private double price;
 
-    public Product(String name, double price, String category) {
+    public Product(String name, String category, double price) {
         this.name = name;
-        this.price = price;
         this.category = category;
+        this.price = price;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
     public String getCategory() {
         return category;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
 
