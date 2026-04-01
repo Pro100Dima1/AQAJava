@@ -58,23 +58,6 @@ public class DepositeMoneyByUser {
                 .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_CREATED);
-
-        //Получение токена юзера при логине :
-        String userAuthToken = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "Dima100",
-                          "password": "Qa934100!"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .header("Authorization");
     }
 
     public static Stream<Arguments> validValueOfDeposite() {
