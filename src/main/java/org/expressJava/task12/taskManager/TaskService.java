@@ -7,28 +7,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class TaskService<T extends Number> {
-    private Map<T, Task<T>> tasks = new HashMap<>();
+    Map<T, Task<T>> tasks = new HashMap<>();
 
     public synchronized void addTask(Task<T> task) {
-        if (tasks.putIfAbsent(task.getId(), task) != null) {
-            throw new IllegalArgumentException("Task id must be unique");
+        if(tasks.putIfAbsent(task.getId(), task) != null){
+            throw new IllegalStateException("Task already exists");
         }
     }
 
     public synchronized void deleteTask(T id) {
-        if (tasks.remove(id) == null) {
-            throw new IllegalArgumentException("Task not found");
+        if(tasks.remove(id) == null){
+            throw new IllegalStateException("Task not found");
         }
     }
 
-    public synchronized List<Task<T>> searchByStatus(String status) {
+    public synchronized List<Task<T>> searchTaskByStatus(String status) {
         return tasks.values().stream()
                 .filter(t -> t.getStatus().equals(status))
-                .sorted((x, y) -> x.getData().compareTo(y.getData()))
+                .sorted((Task<T> x, Task<T>y)-> x.getData().compareTo(y.getData()))
                 .collect(Collectors.toList());
     }
 
-    public synchronized List<Task<T>> searchByPriority(int priority) {
+    public synchronized List<Task<T>> searchTaskByPriority(int priority) {
         return tasks.values().stream()
                 .filter(t -> t.getPriority() == priority)
                 .sorted(Comparator.comparing(Task::getData))

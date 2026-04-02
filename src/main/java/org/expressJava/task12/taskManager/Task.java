@@ -1,9 +1,13 @@
 package org.expressJava.task12.taskManager;
 
 public class Task<T extends Number> {
+
     private String status;
+
     private String data;
+
     private T id;
+
     private int priority;
 
     public Task(String status, String data, T id, int priority) {
