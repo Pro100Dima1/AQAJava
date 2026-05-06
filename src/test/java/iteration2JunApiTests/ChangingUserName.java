@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import models.AuthorizationRequest;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +13,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import requests.post.AdminAutharizationRequester;
+import specs.RequestSpecs;
+import specs.ResponseSpecs;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -28,21 +32,31 @@ public class ChangingUserName {
     }
 
     @BeforeAll
-    public static void createUserByAdmin(){
+    public static void createUserByAdmin() {
         //Авторизация Админа для возможности осздать юзера :
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "admin",
-                          "password": "admin"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK);
+
+        // Создали model которую потом передадим в запрос post
+        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
+                .username("admin")
+                .password("admin")
+                .build();
+
+        new AdminAutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.adminLoginWasSuccsess())
+                .post(authorizationRequest);
+
+//        given()
+//                .contentType(ContentType.JSON)
+//                .accept(ContentType.JSON)
+//                .body("""
+//                        {
+//                          "username": "admin",
+//                          "password": "admin"
+//                        }
+//                        """)
+//                .post("http://localhost:4111/api/v1/auth/login")
+//                .then()
+//                .assertThat()
+//                .statusCode(HttpStatus.SC_OK);
 
         //Создание юзера админом :
         given()
@@ -114,6 +128,7 @@ public class ChangingUserName {
                 .statusCode(HttpStatus.SC_OK)
                 .extract()
                 .path("name");
+
 
         //Проверка, что создался юзер с этим именем
         given()
