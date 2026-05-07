@@ -8,13 +8,19 @@ import org.apache.http.protocol.HTTP;
 public class ResponseSpecs {
     private ResponseSpecs() {}
 
-    public static ResponseSpecBuilder defaultResponseSpec() {
+    private static ResponseSpecBuilder defaultResponseSpec() {
         return new ResponseSpecBuilder();
     }
 
     public static ResponseSpecification adminLoginWasSuccsess(){
         return defaultResponseSpec()
                 .expectStatusCode(HttpStatus.SC_OK)
+                .build();
+    }
+
+    public static ResponseSpecification userWasCreatedByAdminSucssess(){
+        return defaultResponseSpec()
+                .expectStatusCode(HttpStatus.SC_CREATED)
                 .build();
     }
 }

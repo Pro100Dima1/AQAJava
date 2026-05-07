@@ -1,18 +1,21 @@
-package requests.post;
+package requests;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import models.AuthorizationRequest;
-import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
 
-public class AdminAutharizationRequester extends RequestPost<AuthorizationRequest> {
+public class AdminAutharizationRequester extends Requests<AuthorizationRequest> {
 
     public AdminAutharizationRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
         super(requestSpecification, responseSpecification);
+    }
+
+    @Override
+    public ValidatableResponse get(AuthorizationRequest model) {
+        return null;
     }
 
     @Override
@@ -24,5 +27,10 @@ public class AdminAutharizationRequester extends RequestPost<AuthorizationReques
                 .then()
                 .assertThat()
                 .spec(responseSpecification);
+    }
+
+    @Override
+    public ValidatableResponse put(AuthorizationRequest mmodel) {
+        return null;
     }
 }

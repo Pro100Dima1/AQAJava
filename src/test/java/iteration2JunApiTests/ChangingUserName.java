@@ -1,10 +1,13 @@
 package iteration2JunApiTests;
 
+import generator.RandomData;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import models.AuthorizationRequest;
+import models.CreateUserByAdminRequest;
+import models.UserRole;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +16,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import requests.post.AdminAutharizationRequester;
+import requests.AdminAutharizationRequester;
+import requests.AdminUserCreateRequester;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
@@ -23,13 +27,6 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 
 public class ChangingUserName {
-
-    @BeforeAll
-    public static void setupRestAssured() {
-        RestAssured.filters(
-                List.of(new RequestLoggingFilter(),
-                        new ResponseLoggingFilter()));
-    }
 
     @BeforeAll
     public static void createUserByAdmin() {
@@ -57,23 +54,31 @@ public class ChangingUserName {
 //                .then()
 //                .assertThat()
 //                .statusCode(HttpStatus.SC_OK);
-
         //Создание юзера админом :
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", "Basic YWRtaW46YWRtaW4=")
-                .body("""
-                        {
-                            "username": "Dima100",
-                            "password": "Qa934100!",
-                            "role": "USER"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/admin/users")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_CREATED);
+        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
+                .username(RandomData.getName())
+                .password(RandomData.getPassword())
+                .role(UserRole.USER.toString())
+                .build();
+
+        new AdminUserCreateRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
+                .post(createUserByAdminRequest);
+
+//        given()
+//                .contentType(ContentType.JSON)
+//                .accept(ContentType.JSON)
+//                .header("Authorization", "Basic YWRtaW46YWRtaW4=")
+//                .body("""
+//                        {
+//                            "username": "Dima100",
+//                            "password": "Qa934100!",
+//                            "role": "USER"
+//                        }
+//                        """)
+//                .post("http://localhost:4111/api/v1/admin/users")
+//                .then()
+//                .assertThat()
+//                .statusCode(HttpStatus.SC_CREATED);
     }
 
     @CsvSource({

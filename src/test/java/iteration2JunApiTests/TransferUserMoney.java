@@ -1,9 +1,13 @@
 package iteration2JunApiTests;
 
+import generator.RandomData;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import models.AuthorizationRequest;
+import models.CreateUserByAdminRequest;
+import models.UserRole;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,6 +15,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import requests.AdminAutharizationRequester;
+import requests.AdminUserCreateRequester;
+import specs.RequestSpecs;
+import specs.ResponseSpecs;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -18,14 +26,38 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 
 public class TransferUserMoney {
-
     @BeforeAll
-    public static void setupRestAssured() {
-        RestAssured.filters(
-                List.of(new RequestLoggingFilter(),
-                        new ResponseLoggingFilter()));
+    public static void createUserByAdmin() {
+        //Авторизация Админа для возможности осздать юзера :
+        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
+                .username("admin")
+                .password("admin")
+                .build();
+
+        new AdminAutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.adminLoginWasSuccsess())
+                .post(authorizationRequest);
+
+        //Создание юзера админом :
+        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
+                .username(RandomData.getName())
+                .password(RandomData.getPassword())
+                .role(UserRole.USER.toString())
+                .build();
+
+        new AdminUserCreateRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
+                .post(createUserByAdminRequest);
     }
 
+    public static Stream<Arguments> validValueOfDeposite() {
+        return Stream.of(
+                Arguments.of("1", "3000"),
+                Arguments.of("1", "0"),
+                Arguments.of("1", "4999.99"),
+                Arguments.of("1", "5000"),
+                Arguments.of("1", "5000"),
+                Arguments.of("1", "0.01")
+        );
+    }
     public static Stream<Arguments> validTransferValue() {
         return Stream.of(
                 Arguments.of(1, 2, 10000),
@@ -35,7 +67,6 @@ public class TransferUserMoney {
                 Arguments.of(1, 2, 0.01),
                 Arguments.of(1, 2, 200.1)
         );
-
     }
 
     @MethodSource("validTransferValue")
