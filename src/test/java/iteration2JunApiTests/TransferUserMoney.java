@@ -1,9 +1,6 @@
 package iteration2JunApiTests;
 
 import generator.RandomData;
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import models.AuthorizationRequest;
 import models.CreateUserByAdminRequest;
@@ -15,12 +12,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import requests.AdminAutharizationRequester;
-import requests.AdminUserCreateRequester;
+import requests.AutharizationRequester;
+import requests.AdminCreateUserRequester;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
@@ -34,7 +30,7 @@ public class TransferUserMoney {
                 .password("admin")
                 .build();
 
-        new AdminAutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.adminLoginWasSuccsess())
+        new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
                 .post(authorizationRequest);
 
         //Создание юзера админом :
@@ -44,7 +40,7 @@ public class TransferUserMoney {
                 .role(UserRole.USER.toString())
                 .build();
 
-        new AdminUserCreateRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
                 .post(createUserByAdminRequest);
     }
 

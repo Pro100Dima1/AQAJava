@@ -5,10 +5,12 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.HttpStatus;
-import requests.Requests;
+import models.AuthorizationRequest;
+import requests.AutharizationRequester;
+import requests.GetInfoUserRequester;
 
 import java.util.List;
+import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
@@ -28,29 +30,36 @@ public class RequestSpecs {
     }
 
     public static RequestSpecification autharizationByAdmin() {
-       return RequestSpecs.defaultRequestSpec()
+        return RequestSpecs.defaultRequestSpec()
                 .addHeader("Authorization", "YWRtaW46YWRtaW4=")
                 .build();
     }
 
-    public static RequestSpecification autharizationByUser(){
-        String userAuthToken = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "Dima100",
-                          "password": "Qa934100!"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
+    public static RequestSpecification userLogin() {
+        return defaultRequestSpec().build();
+    }
+
+    public static RequestSpecification getInfo() {
+        return defaultRequestSpec().build();
+    }
+
+
+    public static RequestSpecification autharizationByUser(String username, String password) {
+        String userAuthToken = new AutharizationRequester(RequestSpecs.userLogin(), ResponseSpecs.requestReturnStatusOK())
+                .post(AuthorizationRequest.builder().username(username).password(password).build())
                 .extract()
                 .header("Authorization");
         return defaultRequestSpec()
                 .addHeader("Authorization", userAuthToken)
+                .build();
+    }
+
+    public static RequestSpecification getUserInfo() {
+        String nameUser = new GetInfoUserRequester(RequestSpecs.getInfo(), ResponseSpecs.requestReturnStatusOK())
+                .get(null)
+                .extract()
+                .body().jsonPath().getString("name");
+        return defaultRequestSpec()
                 .build();
     }
 }

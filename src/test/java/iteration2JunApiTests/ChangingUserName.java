@@ -1,11 +1,9 @@
 package iteration2JunApiTests;
 
 import generator.RandomData;
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import models.AuthorizationRequest;
+import models.ChangeNameByUserRequest;
 import models.CreateUserByAdminRequest;
 import models.UserRole;
 import org.apache.http.HttpStatus;
@@ -16,70 +14,17 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import requests.AdminAutharizationRequester;
-import requests.AdminUserCreateRequester;
+import requests.AutharizationRequester;
+import requests.AdminCreateUserRequester;
+import requests.ChangeNameRequester;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
 
 public class ChangingUserName {
-
-    @BeforeAll
-    public static void createUserByAdmin() {
-        //Авторизация Админа для возможности осздать юзера :
-
-        // Создали model которую потом передадим в запрос post
-        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
-                .username("admin")
-                .password("admin")
-                .build();
-
-        new AdminAutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.adminLoginWasSuccsess())
-                .post(authorizationRequest);
-
-//        given()
-//                .contentType(ContentType.JSON)
-//                .accept(ContentType.JSON)
-//                .body("""
-//                        {
-//                          "username": "admin",
-//                          "password": "admin"
-//                        }
-//                        """)
-//                .post("http://localhost:4111/api/v1/auth/login")
-//                .then()
-//                .assertThat()
-//                .statusCode(HttpStatus.SC_OK);
-        //Создание юзера админом :
-        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
-                .username(RandomData.getName())
-                .password(RandomData.getPassword())
-                .role(UserRole.USER.toString())
-                .build();
-
-        new AdminUserCreateRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
-                .post(createUserByAdminRequest);
-
-//        given()
-//                .contentType(ContentType.JSON)
-//                .accept(ContentType.JSON)
-//                .header("Authorization", "Basic YWRtaW46YWRtaW4=")
-//                .body("""
-//                        {
-//                            "username": "Dima100",
-//                            "password": "Qa934100!",
-//                            "role": "USER"
-//                        }
-//                        """)
-//                .post("http://localhost:4111/api/v1/admin/users")
-//                .then()
-//                .assertThat()
-//                .statusCode(HttpStatus.SC_CREATED);
-    }
 
     @CsvSource({
             "Dima Orlow",
@@ -88,41 +33,45 @@ public class ChangingUserName {
     @ParameterizedTest
     @DisplayName("Happy path test")
     public void changingNameTwoWordsWithSpaceTest(String name) {
-        String requestBody = String.format(
-                """
-                        {
-                            "name" : "%s"
-                        }
-                        """, name);
+        // Авторизация Админа
+        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
+                .username("admin")
+                .password("admin")
+                .build();
+
+        new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequest);
+
+        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
+                .username(name)
+                .password(RandomData.getPassword())
+                .role(UserRole.USER.toString())
+                .build();
+        // Создание юзера админом
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
+                .post(createUserByAdminRequest);
+
         //Получение токена юзера при логине :
-        String userAuthToken = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "Dima100",
-                          "password": "Qa934100!"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .header("Authorization");
+        AuthorizationRequest authorizationRequestUser = AuthorizationRequest.builder()
+                .username(createUserByAdminRequest.getUsername())
+                .password(createUserByAdminRequest.getPassword())
+                .build();
+
+        new AutharizationRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequestUser);
 
         //Изменение имени :
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .body(requestBody)
-                .put("http://localhost:4111/api/v1/customer/profile")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK);
+        ChangeNameByUserRequest changeNameByUserRequest = ChangeNameByUserRequest.builder()
+                .name(createUserByAdminRequest.getUsername())
+                .build();
+
+        new ChangeNameRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .post(changeNameByUserRequest);
 
         //Получение Имени юзера из тела ответа :
+
+
+
         String nameUser = given()
                 .contentType(ContentType.JSON)
                 .accept(ContentType.JSON)

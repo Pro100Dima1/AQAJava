@@ -7,9 +7,9 @@ import models.AuthorizationRequest;
 
 import static io.restassured.RestAssured.given;
 
-public class AdminAutharizationRequester extends Requests<AuthorizationRequest> {
+public class AutharizationRequester extends Requests<AuthorizationRequest> {
 
-    public AdminAutharizationRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
+    public AutharizationRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
         super(requestSpecification, responseSpecification);
     }
 

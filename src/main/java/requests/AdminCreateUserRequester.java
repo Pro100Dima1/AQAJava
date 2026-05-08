@@ -7,8 +7,8 @@ import models.CreateUserByAdminRequest;
 
 import static io.restassured.RestAssured.given;
 
-public class AdminUserCreateRequester extends Requests<CreateUserByAdminRequest>{
-    public AdminUserCreateRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
+public class AdminCreateUserRequester extends Requests<CreateUserByAdminRequest>{
+    public AdminCreateUserRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
         super(requestSpecification, responseSpecification);
     }
 
