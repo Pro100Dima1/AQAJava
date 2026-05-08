@@ -6,6 +6,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import models.AuthorizationRequest;
+import models.GetUserInfoResponse;
 import requests.AutharizationRequester;
 import requests.GetInfoUserRequester;
 
@@ -31,7 +32,7 @@ public class RequestSpecs {
 
     public static RequestSpecification autharizationByAdmin() {
         return RequestSpecs.defaultRequestSpec()
-                .addHeader("Authorization", "YWRtaW46YWRtaW4=")
+                .addHeader("Authorization", "Basic YWRtaW46YWRtaW4=")
                 .build();
     }
 
@@ -39,8 +40,14 @@ public class RequestSpecs {
         return defaultRequestSpec().build();
     }
 
-    public static RequestSpecification getInfo() {
-        return defaultRequestSpec().build();
+    public static RequestSpecification getInfo(String username, String password) {
+        String userAuthToken = new AutharizationRequester(RequestSpecs.userLogin(), ResponseSpecs.requestReturnStatusOK())
+                .post(AuthorizationRequest.builder().username(username).password(password).build())
+                .extract()
+                .header("Authorization");
+        return defaultRequestSpec()
+                .addHeader("Authorization", userAuthToken)
+                .build();
     }
 
 
@@ -54,12 +61,17 @@ public class RequestSpecs {
                 .build();
     }
 
-    public static RequestSpecification getUserInfo() {
-        String nameUser = new GetInfoUserRequester(RequestSpecs.getInfo(), ResponseSpecs.requestReturnStatusOK())
+    public static RequestSpecification getUserInfo(String username, String password) {
+        String userAuthToken = new AutharizationRequester(RequestSpecs.userLogin(), ResponseSpecs.requestReturnStatusOK())
+                .post(AuthorizationRequest.builder().username(username).password(password).build())
+                .extract()
+                .header("Authorization");
+        new GetInfoUserRequester(RequestSpecs.getInfo(username, password), ResponseSpecs.requestReturnStatusOK())
                 .get(null)
                 .extract()
-                .body().jsonPath().getString("name");
+                .as(GetUserInfoResponse.class);
         return defaultRequestSpec()
+                .addHeader("Authorization", userAuthToken)
                 .build();
     }
 }

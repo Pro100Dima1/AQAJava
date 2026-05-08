@@ -8,15 +8,15 @@ import models.CreateUserByAdminRequest;
 import models.UserRole;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import requests.AutharizationRequester;
 import requests.AdminCreateUserRequester;
+import requests.AutharizationRequester;
 import requests.ChangeNameRequester;
+import requests.GetInfoUserRequester;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
@@ -43,7 +43,7 @@ public class ChangingUserName {
                 .post(authorizationRequest);
 
         CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
-                .username(name)
+                .username(RandomData.getName())
                 .password(RandomData.getPassword())
                 .role(UserRole.USER.toString())
                 .build();
@@ -62,37 +62,21 @@ public class ChangingUserName {
 
         //Изменение имени :
         ChangeNameByUserRequest changeNameByUserRequest = ChangeNameByUserRequest.builder()
-                .name(createUserByAdminRequest.getUsername())
+                .name(name)
                 .build();
 
         new ChangeNameRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .post(changeNameByUserRequest);
+                .put(changeNameByUserRequest);
 
         //Получение Имени юзера из тела ответа :
-
-
-
-        String nameUser = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/profile")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
+        String nameUser = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get(null)
                 .extract()
-                .path("name");
-
+                .body().jsonPath().getString("name");
 
         //Проверка, что создался юзер с этим именем
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/profile")
-                .then()
-                .assertThat()
-                .body("name", Matchers.equalTo(nameUser));
+        new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameMathesOk(nameUser))
+                        .get(null);
     }
 
     public static Stream<Arguments> invalidNameUserTests() {
