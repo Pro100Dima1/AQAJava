@@ -40,7 +40,7 @@ public class TransferUserMoney {
                 .role(UserRole.USER.toString())
                 .build();
 
-        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusCreated())
                 .post(createUserByAdminRequest);
     }
 

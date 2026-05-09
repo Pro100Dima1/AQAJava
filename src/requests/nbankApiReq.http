@@ -23,15 +23,15 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ### Check User Info
 GET http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic RGltYTEyMzQ3ODk6UWE5MzQ0MDIwISE=
+Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
 ### Check User Accounts
 GET http://localhost:4111/api/v1/customer/accounts
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
 ### Create accounts
 POST http://localhost:4111/api/v1/accounts
 Content-Type: application/json
-Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
+Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
 
 {}
 
@@ -148,12 +148,13 @@ Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 ###Deposit cases
 ###1)Make a deposit of 3000
+
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
-Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
+Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
 
 {
-  "id": 1,
+  "id": 4,
   "balance": 3000
 }
 

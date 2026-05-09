@@ -1,13 +1,10 @@
 package iteration2JunApiTests;
 
 import generator.RandomData;
-import io.restassured.http.ContentType;
 import models.AuthorizationRequest;
 import models.ChangeNameByUserRequest;
 import models.CreateUserByAdminRequest;
 import models.UserRole;
-import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -48,7 +45,7 @@ public class ChangingUserName {
                 .role(UserRole.USER.toString())
                 .build();
         // Создание юзера админом
-        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.userWasCreatedByAdminSucssess())
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusCreated())
                 .post(createUserByAdminRequest);
 
         //Получение токена юзера при логине :
@@ -76,7 +73,7 @@ public class ChangingUserName {
 
         //Проверка, что создался юзер с этим именем
         new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameMathesOk(nameUser))
-                        .get(null);
+                .get(null);
     }
 
     public static Stream<Arguments> invalidNameUserTests() {
@@ -98,62 +95,49 @@ public class ChangingUserName {
     @DisplayName("Negative test")
     @ParameterizedTest
     public void negativeTestsChangingName(String name, String errorValue) {
-        String requestBody = String.format(
-                """
-                        {
-                            "name" : "%s"
-                        }
-                        """, name);
+        // Авторизация Админа
+        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
+                .username("admin")
+                .password("admin")
+                .build();
+
+        new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequest);
+
+        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
+                .username(RandomData.getName())
+                .password(RandomData.getPassword())
+                .role(UserRole.USER.toString())
+                .build();
+        // Создание юзера админом
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusCreated())
+                .post(createUserByAdminRequest);
 
         //Получение токена юзера при логине :
-        String userAuthToken = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "Dima100",
-                          "password": "Qa934100!"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .header("Authorization");
+        AuthorizationRequest authorizationRequestUser = AuthorizationRequest.builder()
+                .username(createUserByAdminRequest.getUsername())
+                .password(createUserByAdminRequest.getPassword())
+                .build();
 
+        new AutharizationRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequestUser);
         //Изменение имени на НЕ валидное :
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .body(requestBody)
-                .put("http://localhost:4111/api/v1/customer/profile")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST)
-                .body(Matchers.equalTo(errorValue));
+        ChangeNameByUserRequest changeNameByUserRequest = ChangeNameByUserRequest.builder()
+                .name(name)
+                .build();
+
+        new ChangeNameRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.userCanNotChangeNameBadRequest(errorValue))
+                .put(changeNameByUserRequest);
 
         //Получение Имени юзера из тела ответа :
-        String nameUser = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/profile")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
+        String nameUser = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get(null)
                 .extract()
-                .path("name");
+                .body().jsonPath().getString("name");
 
         //Проверка, что создался юзер с этим именем
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/profile")
-                .then()
-                .assertThat()
-                .body("name", Matchers.not(Matchers.equalTo(nameUser)));
+        new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameNotMatches(name))
+                .get(null);
     }
 }
+
