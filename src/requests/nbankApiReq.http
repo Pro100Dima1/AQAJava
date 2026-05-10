@@ -23,15 +23,15 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ### Check User Info
 GET http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
+Authorization: Basic SGZnYkFDanRtRTpOT1BuenhmdzY4OSQ=
 ### Check User Accounts
 GET http://localhost:4111/api/v1/customer/accounts
 Content-Type: application/json
-Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
+Authorization: Basic SGZnYkFDanRtRTpOT1BuenhmdzY4OSQ=
 ### Create accounts
 POST http://localhost:4111/api/v1/accounts
 Content-Type: application/json
-Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
+Authorization: Basic SGZnYkFDanRtRTpOT1BuenhmdzY4OSQ=
 
 {}
 
@@ -161,7 +161,7 @@ Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
 ###2)Make a deposit of -100
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic WW5XT2pZS0lNTzpQUlBhaW9sejY2OCQ=
 
 {
   "id": 1,
@@ -262,12 +262,12 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ###1)Transfer 10000
 POST http://localhost:4111/api/v1/accounts/transfer
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic SGZnYkFDanRtRTpOT1BuenhmdzY4OSQ=
 
 {
-  "senderAccountId": 1,
-  "receiverAccountId": 2,
-  "amount": 10000
+  "senderAccountId": 16,
+  "receiverAccountId": 23,
+  "amount": 3000
 }
 
 ###2)Transfer 0

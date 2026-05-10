@@ -2,6 +2,8 @@ package generator;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.util.Random;
+
 public class RandomData {
     private RandomData() {}
 
@@ -15,7 +17,8 @@ public class RandomData {
                 RandomStringUtils.randomNumeric(3) + "$";
     }
 
-    public static String getBalance(){
-        return RandomStringUtils.randomNumeric(7000);
+    public static float getBalance(){
+         Random random = new Random();
+         return random.nextFloat() * 5000;
     }
 }

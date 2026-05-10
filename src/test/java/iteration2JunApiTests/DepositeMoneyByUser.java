@@ -84,72 +84,56 @@ public class DepositeMoneyByUser {
 
     public static Stream<Arguments> invalidValueOfDeposite() {
         return Stream.of(
-                Arguments.of("1", "-100"),
-                Arguments.of("1", "5000.01"),
-                Arguments.of("1", "0.0001")
+                Arguments.of( "-100", "Deposit amount must be at least 0.01"),
+                Arguments.of( "5000.01", "Deposit amount cannot exceed 5000"),
+                Arguments.of( "0.0001", "Deposit amount must be at least 0.01")
         );
     }
 
     @MethodSource("invalidValueOfDeposite")
     @DisplayName("Negative tests")
     @ParameterizedTest
-    public void invalidDepositeValue(int id, int balance) {
-        String requestBodyForDeposite = String.format(
-                """
-                        {
-                          "id": 1,
-                          "balance": 3000
-                        }
-                        """, id, balance);
+    public void invalidDepositeValue(float balance, String errorValue) {
+        // Авторизация Админа
+        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
+                .username("admin")
+                .password("admin")
+                .build();
+
+        new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequest);
+
+        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
+                .username(RandomData.getName())
+                .password(RandomData.getPassword())
+                .role(UserRole.USER.toString())
+                .build();
+        // Создание юзера админом
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusCreated())
+                .post(createUserByAdminRequest);
         //Получение токена юзера при логине :
-        String userAuthToken = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "Dima100",
-                          "password": "Qa934100!"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .extract()
-                .header("Authorization");
+        AuthorizationRequest authorizationRequestUser = AuthorizationRequest.builder()
+                .username(createUserByAdminRequest.getUsername())
+                .password(createUserByAdminRequest.getPassword())
+                .build();
 
+        new AutharizationRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequestUser);
+        //Создание аккаунта юзеру
+        new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
+                .post(null);
         //Депозит денег на аккаунт юзера
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .body(requestBodyForDeposite)
-                .post("http://localhost:4111/api/v1/accounts/deposit")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
-
-        //Получение баланса аккаунта
-        double accountBalance = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/accounts")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
+        int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get(null)
                 .extract()
-                .body().path("balance");
+                .body().jsonPath().getInt("accounts[0].id");
 
-        //Проверка, что баланс аккаунта совпадает с совершенным депозитом
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/accounts")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .body("balance", Matchers.not(Matchers.equalTo(accountBalance)));
+        DepositeRequest depositeRequest = DepositeRequest.builder()
+                .balance(balance)
+                .id(idAccount)
+                .build();
+
+        new DepositeRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.userCanNotChangeNameBadRequest(errorValue))
+                .post(depositeRequest);
     }
 }
