@@ -104,66 +104,80 @@ public class TransferUserMoney extends BaseTest {
 
     public static Stream<Arguments> inValidTransferValue() {
         return Stream.of(
-                Arguments.of( -100),
-                Arguments.of( 10000.01),
-                Arguments.of( 5348.999999999998)
+                Arguments.of( -100F, "Transfer amount must be at least 0.01"),
+                Arguments.of( 10000.01F, "Transfer amount cannot exceed 10000"),
+                Arguments.of( 5348.999999999998F, "Invalid transfer: insufficient funds or invalid accounts")
         );
     }
 
     @MethodSource("inValidTransferValue")
     @DisplayName("Negative tests")
     @ParameterizedTest
-    public void canNotTransferUserMoney(int senderid, int receiverid, int amount) {
+    public void canNotTransferUserMoney(float amount, String errorValue) {
+
+        // Авторизация Админа
+        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
+                .username("admin")
+                .password("admin")
+                .build();
+
+        new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequest);
+
+        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
+                .username(RandomData.getName())
+                .password(RandomData.getPassword())
+                .role(UserRole.USER.toString())
+                .build();
+        // Создание юзера админом
+        new AdminCreateUserRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusCreated())
+                .post(createUserByAdminRequest);
 
         //Получение токена юзера при логине :
-        String userAuthToken = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .body("""
-                        {
-                          "username": "Dima100",
-                          "password": "Qa934100!"
-                        }
-                        """)
-                .post("http://localhost:4111/api/v1/auth/login")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
+        AuthorizationRequest authorizationRequestUser = AuthorizationRequest.builder()
+                .username(createUserByAdminRequest.getUsername())
+                .password(createUserByAdminRequest.getPassword())
+                .build();
+
+        new AutharizationRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .post(authorizationRequestUser);
+
+        //Создание аккаунта юзеру
+        new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
+                .post(null);
+        //Создание второго аккаунта юзеру
+        new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
+                .post(null);
+        //Депозит денег юзеру на аккаунт
+        int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get(null)
                 .extract()
-                .header("Authorization");
+                .body().jsonPath().getInt("accounts[0].id");
 
-        //Трансфер денежных средств на другой аккаунт
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .body(requestTransferBody)
-                .post("http://localhost:4111/api/v1/accounts/transfer")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_BAD_REQUEST);
-
-        //Получение баланса аккаунта после трансфера
-        double accountBalanceAfterTransfer = given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/accounts")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
+        int idAccount2 = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get(null)
                 .extract()
-                .body().path("balance");
+                .body().jsonPath().getInt("accounts[1].id");
 
-        //Проверка, что баланс аккаунта изменился после трансфера
-        given()
-                .contentType(ContentType.JSON)
-                .accept(ContentType.JSON)
-                .header("Authorization", userAuthToken)
-                .get("http://localhost:4111/api/v1/customer/accounts")
-                .then()
-                .assertThat()
-                .statusCode(HttpStatus.SC_OK)
-                .body("balance", Matchers.not(Matchers.equalTo(accountBalanceAfterTransfer)));
+        DepositeRequest depositeRequest = DepositeRequest.builder()
+                .balance(RandomData.getBalance())
+                .id(idAccount)
+                .build();
+
+        new DepositeRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.balanceMatches(depositeRequest.getBalance()))
+                .post(depositeRequest);
+        // Трансфер денег с аккаунта на аккаунт
+        TransferRequest transferRequest = TransferRequest.builder()
+                .senderAccountId(idAccount)
+                .receiverAccountId(idAccount2)
+                .amount(amount)
+                .build();
+
+        String transferResponse = new TransferRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.userCanNotChangeNameBadRequest(errorValue))
+                .post(transferRequest)
+                .extract()
+                .asString();
+
+        softly.assertThat(transferResponse).isEqualTo(errorValue);
     }
 }
