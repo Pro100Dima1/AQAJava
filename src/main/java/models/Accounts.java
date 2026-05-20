@@ -14,6 +14,6 @@ import java.util.List;
 public class Accounts extends BaseModel{
     private int id;
     private String accountNumber;
-    private double balance;
+    private float balance;
     private List<Transaction> transactions;
 }

@@ -23,6 +23,15 @@ public class GetInfoUserRequester extends Requests {
                 .spec(responseSpecification);
     }
 
+    public ValidatableResponse get() {
+        return given()
+                .spec(requestSpecification)
+                .get("/api/v1/customer/profile")
+                .then()
+                .assertThat()
+                .spec(responseSpecification);
+    }
+
     @Override
     public ValidatableResponse post(BaseModel model ) {
         return null;

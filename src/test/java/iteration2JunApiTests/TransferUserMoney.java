@@ -64,18 +64,18 @@ public class TransferUserMoney extends BaseTest {
 
         //Создание аккаунта юзеру
         new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
-                .post(null);
+                .post();
         //Создание второго аккаунта юзеру
         new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
-                .post(null);
+                .post();
         //Депозит денег юзеру на аккаунт
         int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .body().jsonPath().getInt("accounts[0].id");
 
         int idAccount2 = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .body().jsonPath().getInt("accounts[1].id");
 
@@ -144,18 +144,18 @@ public class TransferUserMoney extends BaseTest {
 
         //Создание аккаунта юзеру
         new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
-                .post(null);
+                .post();
         //Создание второго аккаунта юзеру
         new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
-                .post(null);
+                .post();
         //Депозит денег юзеру на аккаунт
         int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .body().jsonPath().getInt("accounts[0].id");
 
         int idAccount2 = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .body().jsonPath().getInt("accounts[1].id");
 

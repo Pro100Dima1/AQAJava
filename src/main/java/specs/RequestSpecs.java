@@ -11,9 +11,6 @@ import requests.AutharizationRequester;
 import requests.GetInfoUserRequester;
 
 import java.util.List;
-import java.util.Map;
-
-import static io.restassured.RestAssured.given;
 
 public class RequestSpecs {
     private RequestSpecs() {

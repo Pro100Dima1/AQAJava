@@ -2,8 +2,15 @@ package specs;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
+import models.AuthorizationRequest;
+import models.CheckUserAccountsResponse;
+import models.GetUserInfoResponse;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
+import requests.GetInfoAccountsUserRequester;
+import requests.GetInfoUserRequester;
+
+import java.util.List;
 
 public class ResponseSpecs {
     private ResponseSpecs() {}
@@ -46,6 +53,16 @@ public class ResponseSpecs {
     public static ResponseSpecification balanceMatches(float balance){
         return defaultResponseSpec()
                 .expectBody("balance", Matchers.equalTo(balance))
+                .build();
+    }
+
+    public static ResponseSpecification balanceMatches(float balance, AuthorizationRequest req){
+        List<CheckUserAccountsResponse> checkUserAccountsResponse = new GetInfoAccountsUserRequester(RequestSpecs.autharizationByUser(req.getUsername(), req.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get()
+                .extract()
+                .jsonPath().getList("", CheckUserAccountsResponse.class);
+        return defaultResponseSpec()
+                .expectBody("[0].balance", Matchers.equalTo(balance))
                 .build();
     }
 }

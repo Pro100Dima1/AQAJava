@@ -1,10 +1,7 @@
 package iteration2JunApiTests;
 
 import generator.RandomData;
-import models.AuthorizationRequest;
-import models.ChangeNameByUserRequest;
-import models.CreateUserByAdminRequest;
-import models.UserRole;
+import models.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -66,14 +63,14 @@ public class ChangingUserName {
                 .put(changeNameByUserRequest);
 
         //Получение Имени юзера из тела ответа :
-        String nameUser = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+        GetUserInfoResponse nameUser = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get()
                 .extract()
-                .body().jsonPath().getString("name");
+                .as(GetUserInfoResponse.class);
 
         //Проверка, что создался юзер с этим именем
-        new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameMathesOk(nameUser))
-                .get(null);
+        new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameMathesOk(nameUser.getUsername()))
+                .get();
     }
 
     public static Stream<Arguments> invalidNameUserTests() {
@@ -130,14 +127,14 @@ public class ChangingUserName {
                 .put(changeNameByUserRequest);
 
         //Получение Имени юзера из тела ответа :
-        String nameUser = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+        GetUserInfoResponse nameUser = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get()
                 .extract()
-                .body().jsonPath().getString("name");
+                .as(GetUserInfoResponse.class);
 
         //Проверка, что создался юзер с этим именем
-        new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameNotMatches(name))
-                .get(null);
+        new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.nameNotMatches(nameUser.getUsername()))
+                .get();
     }
 }
 

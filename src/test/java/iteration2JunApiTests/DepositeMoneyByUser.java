@@ -1,13 +1,8 @@
 package iteration2JunApiTests;
 
+
 import generator.RandomData;
-import io.restassured.http.ContentType;
-import models.AuthorizationRequest;
-import models.CreateUserByAdminRequest;
-import models.DepositeRequest;
-import models.UserRole;
-import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
+import models.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,20 +11,19 @@ import requests.*;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
+import java.util.List;
 import java.util.stream.Stream;
-
-import static io.restassured.RestAssured.given;
 
 public class DepositeMoneyByUser {
 
     public static Stream<Arguments> validValueOfDeposite() {
         return Stream.of(
-                Arguments.of( "3000"),
+                Arguments.of( RandomData.getRandomBalance()),
                 Arguments.of( "0"),
-                Arguments.of( "4999.99"),
-                Arguments.of( "5000"),
-                Arguments.of( "5000"),
-                Arguments.of( "0.01")
+                Arguments.of( "4999.99F"),
+                Arguments.of( "5000F"),
+                Arguments.of( RandomData.getRandomBalance()),
+                Arguments.of( "0.01F")
         );
     }
 
@@ -66,10 +60,10 @@ public class DepositeMoneyByUser {
 
         //Создание аккаунта юзеру
         new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
-                .post(null);
+                .post();
         //Депозит денег на аккаунт юзера
         int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .body().jsonPath().getInt("accounts[0].id");
 
@@ -80,6 +74,14 @@ public class DepositeMoneyByUser {
 
         new DepositeRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.balanceMatches(depositeRequest.getBalance()))
                 .post(depositeRequest);
+
+        List<CheckUserAccountsResponse> checkUserAccountsResponse = new GetInfoAccountsUserRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
+                .get()
+                .extract()
+                .jsonPath().getList("", CheckUserAccountsResponse.class);
+
+        new GetInfoAccountsUserRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.balanceMatches(checkUserAccountsResponse.get(0).getBalance(), authorizationRequestUser))
+                .get();
     }
 
     public static Stream<Arguments> invalidValueOfDeposite() {
@@ -121,10 +123,10 @@ public class DepositeMoneyByUser {
                 .post(authorizationRequestUser);
         //Создание аккаунта юзеру
         new CreateAccountRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusCreated())
-                .post(null);
+                .post();
         //Депозит денег на аккаунт юзера
         int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .body().jsonPath().getInt("accounts[0].id");
 

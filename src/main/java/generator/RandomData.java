@@ -21,4 +21,9 @@ public class RandomData {
          Random random = new Random();
          return random.nextFloat() * 5000;
     }
+
+    public static float getRandomBalance(){
+        Random random = new Random();
+        return random.nextFloat(5000F);
+    }
 }

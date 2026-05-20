@@ -7,8 +7,8 @@ import models.BaseModel;
 
 import static io.restassured.RestAssured.given;
 
-public class CreateAccountRequester extends Requests{
-    public CreateAccountRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
+public class GetInfoAccountsUserRequester extends Requests{
+    public GetInfoAccountsUserRequester(RequestSpecification requestSpecification, ResponseSpecification responseSpecification) {
         super(requestSpecification, responseSpecification);
     }
 
@@ -17,23 +17,18 @@ public class CreateAccountRequester extends Requests{
         return null;
     }
 
-    @Override
-    public ValidatableResponse post(BaseModel model) {
-        return given()
+    public ValidatableResponse get() {
+        return  given()
                 .spec(requestSpecification)
-                .post("/api/v1/accounts")
+                .get("/api/v1/customer/accounts")
                 .then()
                 .assertThat()
                 .spec(responseSpecification);
     }
 
-    public ValidatableResponse post() {
-        return given()
-                .spec(requestSpecification)
-                .post("/api/v1/accounts")
-                .then()
-                .assertThat()
-                .spec(responseSpecification);
+    @Override
+    public ValidatableResponse post(BaseModel model) {
+        return null;
     }
 
     @Override

@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
-public class DepositeResponse extends BaseModel {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CheckUserAccountsResponse extends BaseModel{
     private int id;
     private String accountNumber;
     private float balance;
