@@ -47,7 +47,6 @@ public class RequestSpecs {
                 .build();
     }
 
-
     public static RequestSpecification autharizationByUser(String username, String password) {
         String userAuthToken = new AutharizationRequester(RequestSpecs.userLogin(), ResponseSpecs.requestReturnStatusOK())
                 .post(AuthorizationRequest.builder().username(username).password(password).build())

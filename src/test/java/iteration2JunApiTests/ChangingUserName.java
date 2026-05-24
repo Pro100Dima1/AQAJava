@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 import static io.restassured.RestAssured.given;
 
 public class ChangingUserName {
+    private static final String ADMIN_CREDETIONALS = "admin";
 
     @CsvSource({
             "Dima Orlow",
@@ -29,8 +30,8 @@ public class ChangingUserName {
     public void changingNameTwoWordsWithSpaceTest(String name) {
         // Авторизация Админа
         AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
-                .username("admin")
-                .password("admin")
+                .username(ADMIN_CREDETIONALS)
+                .password(ADMIN_CREDETIONALS)
                 .build();
 
         new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
