@@ -4,8 +4,8 @@ POST http://localhost:4111/api/v1/auth/login
 Content-Type: application/json
 
 {
-  "username": "Dima12347",
-  "password": "Qa9344020!!"
+  "username": "admin",
+  "password": "admin"
 }
 
 ### Create user by Admin
@@ -15,7 +15,7 @@ Content-Type: application/json
 Authorization: Basic YWRtaW46YWRtaW4=
 
 {
-  "username": "Dima12347",
+  "username": "Dima123478912",
   "password": "Qa9344020!!",
   "role": "USER"
 }
@@ -23,15 +23,15 @@ Authorization: Basic YWRtaW46YWRtaW4=
 ### Check User Info
 GET http://localhost:4111/api/v1/customer/profile
 Content-Type: application/json
-Authorization: Basic RGltYTEyMzQ6UWE5MzQ0MDIwISE=
+Authorization: Basic RGltYTEyMzQ3ODkxMjpRYTkzNDQwMjAhIQ==
 ### Check User Accounts
 GET http://localhost:4111/api/v1/customer/accounts
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic RGltYTEyMzQ3ODkxMjpRYTkzNDQwMjAhIQ==
 ### Create accounts
 POST http://localhost:4111/api/v1/accounts
 Content-Type: application/json
-Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
+Authorization: Basic RGltYTEyMzQ3ODkxMjpRYTkzNDQwMjAhIQ==
 
 {}
 
@@ -148,19 +148,20 @@ Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
 
 ###Deposit cases
 ###1)Make a deposit of 3000
+
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
-Authorization: Basic RGltYTEyMzQ3OlFhOTM0NDAyMCEh
+Authorization: Basic R3lqWmxwS3hGbjpHV1l3YXZ5cTE2OCQ=
 
 {
-  "id": 1,
+  "id": 4,
   "balance": 3000
 }
 
 ###2)Make a deposit of -100
 POST http://localhost:4111/api/v1/accounts/deposit
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic WW5XT2pZS0lNTzpQUlBhaW9sejY2OCQ=
 
 {
   "id": 1,
@@ -261,12 +262,12 @@ Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
 ###1)Transfer 10000
 POST http://localhost:4111/api/v1/accounts/transfer
 Content-Type: application/json
-Authorization: Basic UHJvMTAwRGltYTpRYTkzNDQwMjAh
+Authorization: Basic SGZnYkFDanRtRTpOT1BuenhmdzY4OSQ=
 
 {
-  "senderAccountId": 1,
-  "receiverAccountId": 2,
-  "amount": 10000
+  "senderAccountId": 16,
+  "receiverAccountId": 23,
+  "amount": 3000
 }
 
 ###2)Transfer 0
