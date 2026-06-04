@@ -63,7 +63,7 @@ public class RequestSpecs {
                 .extract()
                 .header("Authorization");
         new GetInfoUserRequester(RequestSpecs.getInfo(username, password), ResponseSpecs.requestReturnStatusOK())
-                .get(null)
+                .get()
                 .extract()
                 .as(GetUserInfoResponse.class);
         return defaultRequestSpec()
