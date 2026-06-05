@@ -40,7 +40,7 @@ public class ChangingUserName {
                 .put(changeNameByUserRequest);
         //Получение Имени юзера из тела ответа :
         GetUserInfoResponse nameUser = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(), Endpoint.CUSTOMER_PROFILE)
+                ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
                 .get();
         //Проверка, что создался юзер с этим именем
         new CrudRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),

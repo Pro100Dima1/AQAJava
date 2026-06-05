@@ -4,8 +4,6 @@ import generator.RandomData;
 import models.AuthorizationRequest;
 import models.CreateUserByAdminRequest;
 import models.UserRole;
-import requests.AdminCreateUserRequester;
-import requests.AutharizationRequester;
 import requests.skelethon.interfaces.Endpoint;
 import requests.skelethon.requesters.CrudRequester;
 import specs.RequestSpecs;
@@ -50,7 +48,7 @@ public class AdminSteps {
                 .build();
 
         new CrudRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(), Endpoint.ADMIN_USER)
+                ResponseSpecs.requestReturnStatusOK(), Endpoint.LOGIN)
                 .post(authorizationRequestUser);
 
         return  authorizationRequestUser;

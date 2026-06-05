@@ -48,7 +48,7 @@ public class CrudRequester extends HttpRequest implements CrudEndpointInterface 
     }
 
     @Override
-    public Object put(BaseModel model) {
+    public ValidatableResponse put(BaseModel model) {
         var body = model == null ? "" : model;
         return given()
                 .spec(requestSpecification)
@@ -60,7 +60,7 @@ public class CrudRequester extends HttpRequest implements CrudEndpointInterface 
     }
 
     @Override
-    public Object delete(int id) {
+    public ValidatableResponse delete(int id) {
         return given()
                 .spec(requestSpecification)
                 .delete(endpoint.getUrl())

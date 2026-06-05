@@ -26,6 +26,12 @@ public enum Endpoint {
             ChangeNameByUserResponse.class
     ),
 
+    GET_INFO(
+            "/api/v1/customer/profile",
+            GetUserInfoRequest.class,
+            GetUserInfoResponse.class
+    ),
+
     ACCOUNTS(
             "/api/v1/accounts",
             BaseModel.class,

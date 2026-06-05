@@ -1,9 +1,7 @@
 package requests.skelethon.requesters.steps;
 
-import models.AuthorizationRequest;
 import models.CreateUserAccountsResponse;
 import models.CreateUserByAdminRequest;
-import requests.CreateAccountRequester;
 import requests.skelethon.interfaces.Endpoint;
 import requests.skelethon.requesters.ValidatedCrudRequester;
 import specs.RequestSpecs;

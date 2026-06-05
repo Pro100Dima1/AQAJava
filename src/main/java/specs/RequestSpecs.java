@@ -9,6 +9,8 @@ import models.AuthorizationRequest;
 import models.GetUserInfoResponse;
 import requests.AutharizationRequester;
 import requests.GetInfoUserRequester;
+import requests.skelethon.interfaces.Endpoint;
+import requests.skelethon.requesters.ValidatedCrudRequester;
 
 import java.util.List;
 
@@ -62,10 +64,9 @@ public class RequestSpecs {
                 .post(AuthorizationRequest.builder().username(username).password(password).build())
                 .extract()
                 .header("Authorization");
-        new GetInfoUserRequester(RequestSpecs.getInfo(username, password), ResponseSpecs.requestReturnStatusOK())
-                .get()
-                .extract()
-                .as(GetUserInfoResponse.class);
+        new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getInfo(username, password),
+                ResponseSpecs.requestReturnStatusOK(), Endpoint.CUSTOMER_PROFILE)
+                .get();
         return defaultRequestSpec()
                 .addHeader("Authorization", userAuthToken)
                 .build();
