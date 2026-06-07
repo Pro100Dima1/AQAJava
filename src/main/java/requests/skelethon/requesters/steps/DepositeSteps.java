@@ -1,7 +1,6 @@
 package requests.skelethon.requesters.steps;
 
 import models.AuthorizationRequest;
-import models.CreateUserAccountsResponse;
 import models.DepositeRequest;
 import models.DepositeResponse;
 import requests.skelethon.interfaces.Endpoint;
