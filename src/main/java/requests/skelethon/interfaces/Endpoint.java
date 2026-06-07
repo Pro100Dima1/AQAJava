@@ -23,12 +23,12 @@ public enum Endpoint {
     CUSTOMER_PROFILE(
             "/api/v1/customer/profile",
             ChangeNameByUserRequest.class,
-            ChangeNameByUserResponse.class
+            GetUserInfoResponse.class
     ),
 
     GET_INFO(
             "/api/v1/customer/profile",
-            GetUserInfoRequest.class,
+            BaseModel.class,
             GetUserInfoResponse.class
     ),
 

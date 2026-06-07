@@ -64,9 +64,6 @@ public class RequestSpecs {
                 .post(AuthorizationRequest.builder().username(username).password(password).build())
                 .extract()
                 .header("Authorization");
-        new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getInfo(username, password),
-                ResponseSpecs.requestReturnStatusOK(), Endpoint.CUSTOMER_PROFILE)
-                .get();
         return defaultRequestSpec()
                 .addHeader("Authorization", userAuthToken)
                 .build();

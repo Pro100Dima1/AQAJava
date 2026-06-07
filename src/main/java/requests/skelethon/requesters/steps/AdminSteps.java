@@ -10,22 +10,7 @@ import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
 public class AdminSteps {
-   // private static final String ADMIN_CREDETIONALS = "admin";
-
-//    public static AuthorizationRequest authorizationAdmin() {
-//        // Авторизация Админа
-//        AuthorizationRequest authorizationRequest = AuthorizationRequest.builder()
-//                .username(ADMIN_CREDETIONALS)
-//                .password(ADMIN_CREDETIONALS)
-//                .build();
-//
-//        new AutharizationRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK())
-//                .post(authorizationRequest);
-//
-//        return authorizationRequest;
-//    }
-
-    public static CreateUserByAdminRequest createUserByAdmin() {
+       public static CreateUserByAdminRequest createUserByAdmin() {
         // Создание юзера админом
         CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
                 .username(RandomData.getName())

@@ -31,12 +31,6 @@ public class ResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification nameMathesOk(String name){
-        return defaultResponseSpec()
-                .expectBody("name",Matchers.equalTo(name))
-                .build();
-    }
-
     public static ResponseSpecification userCanNotChangeNameBadRequest(String errorValue){
         return defaultResponseSpec()
                 .expectStatusCode(HttpStatus.SC_BAD_REQUEST)
@@ -44,25 +38,9 @@ public class ResponseSpecs {
                 .build();
     }
 
-    public static ResponseSpecification nameNotMatches(String nameUser){
+    public static ResponseSpecification balanceMatches(){
         return defaultResponseSpec()
-                .expectBody("name", Matchers.not(Matchers.equalTo(nameUser)))
-                .build();
-    }
-
-    public static ResponseSpecification balanceMatches(float balance){
-        return defaultResponseSpec()
-                .expectBody("balance", Matchers.equalTo(balance))
-                .build();
-    }
-
-    public static ResponseSpecification balanceMatches(float balance, AuthorizationRequest req){
-        List<CheckUserAccountsResponse> checkUserAccountsResponse = new GetInfoAccountsUserRequester(RequestSpecs.autharizationByUser(req.getUsername(), req.getPassword()), ResponseSpecs.requestReturnStatusOK())
-                .get()
-                .extract()
-                .jsonPath().getList("", CheckUserAccountsResponse.class);
-        return defaultResponseSpec()
-                .expectBody("[0].balance", Matchers.equalTo(balance))
+                .expectStatusCode(HttpStatus.SC_OK)
                 .build();
     }
 }

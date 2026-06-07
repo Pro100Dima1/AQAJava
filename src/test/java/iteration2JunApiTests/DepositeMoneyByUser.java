@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import requests.*;
 import requests.skelethon.interfaces.Endpoint;
 import requests.skelethon.requesters.CrudRequester;
+import requests.skelethon.requesters.ValidatedCrudRequester;
 import requests.skelethon.requesters.steps.AdminSteps;
 import requests.skelethon.requesters.steps.CreateAccountsSteps;
 import requests.skelethon.requesters.steps.DepositeSteps;
@@ -18,7 +19,7 @@ import specs.ResponseSpecs;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class DepositeMoneyByUser {
+public class DepositeMoneyByUser extends BaseTest{
 
     public static Stream<Arguments> validValueOfDeposite() {
         return Stream.of(
@@ -38,13 +39,13 @@ public class DepositeMoneyByUser {
         //Авторизуемся
         CreateUserByAdminRequest createUserByAdminRequest = AdminSteps.createUserByAdmin();
         AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(createUserByAdminRequest);
-        //Создаем аккаунт юзеру
-        CreateAccountsSteps.createAccounts(createUserByAdminRequest);
+        //Создание аккаунта юзеру
+        CreateUserAccountsResponse createUserAccountsResponse = CreateAccountsSteps.createAccounts(createUserByAdminRequest);
+        int idAccount = createUserAccountsResponse.getId();
         //Делаем депозит на аккаунт с конкретным id
-        CheckUserAccountsResponse checkUserAccountsResponses = DepositeSteps.makeDeposite(balance, authorizationRequestUser);
-        //С помощью Get проверяем баланс аккаунта после депозиты
-        new CrudRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.balanceMatches(checkUserAccountsResponses.getBalance(), authorizationRequestUser), Endpoint.CUSTOMER_PROFILE)
-                .get();
+        DepositeResponse depositeResponse = DepositeSteps.makeDeposite(balance, authorizationRequestUser, idAccount);
+
+        softly.assertThat(depositeResponse.getBalance()).isEqualTo(balance);
     }
 
     public static Stream<Arguments> invalidValueOfDeposite() {
@@ -63,8 +64,9 @@ public class DepositeMoneyByUser {
         CreateUserByAdminRequest createUserByAdminRequest = AdminSteps.createUserByAdmin();
         AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(createUserByAdminRequest);
         //Создание аккаунта юзеру
-        CreateAccountsSteps.createAccounts(createUserByAdminRequest);
+        CreateUserAccountsResponse createUserAccountsResponse = CreateAccountsSteps.createAccounts(createUserByAdminRequest);
+        int idAccount = createUserAccountsResponse.getId();
         //Проверяем ошибочный ответ
-        DepositeSteps.failDeposite(balance, errorValue, authorizationRequestUser);
+        DepositeSteps.failDeposite(balance, errorValue, authorizationRequestUser, idAccount);
     }
 }

@@ -18,7 +18,7 @@ import specs.ResponseSpecs;
 
 import java.util.stream.Stream;
 
-public class ChangingUserName {
+public class ChangingUserName extends BaseTest {
 
     @CsvSource({
             "Dima Orloww",
@@ -42,10 +42,8 @@ public class ChangingUserName {
         GetUserInfoResponse nameUser = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
                 .get();
-        //Проверка, что создался юзер с этим именем
-        new CrudRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.nameMathesOk(nameUser.getUsername()), Endpoint.CUSTOMER_PROFILE)
-                .get();
+
+        softly.assertThat(nameUser.getName()).isEqualTo(name);
     }
 
     public static Stream<Arguments> invalidNameUserTests() {
@@ -76,16 +74,14 @@ public class ChangingUserName {
                 .build();
 
         new CrudRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(), Endpoint.CUSTOMER_PROFILE)
+                ResponseSpecs.userCanNotChangeNameBadRequest(errorValue), Endpoint.CUSTOMER_PROFILE)
                 .put(changeNameByUserRequest);
         //Получение Имени юзера из тела ответа :
         GetUserInfoResponse nameUser = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.CUSTOMER_PROFILE)
                 .get();
-        //Проверка, что создался юзер с этим именем
-        new CrudRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.nameNotMatches(nameUser.getUsername()), Endpoint.CUSTOMER_PROFILE)
-                .get();
+
+        softly.assertThat(nameUser.getName()).isNotEqualTo(name);
     }
 }
 

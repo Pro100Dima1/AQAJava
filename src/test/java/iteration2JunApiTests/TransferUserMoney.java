@@ -10,6 +10,8 @@ import requests.skelethon.interfaces.Endpoint;
 import requests.skelethon.requesters.CrudRequester;
 import requests.skelethon.requesters.ValidatedCrudRequester;
 import requests.skelethon.requesters.steps.AdminSteps;
+import requests.skelethon.requesters.steps.CreateAccountsSteps;
+import requests.skelethon.requesters.steps.DepositeSteps;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
 
@@ -34,24 +36,14 @@ public class TransferUserMoney extends BaseTest {
         AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(createUserByAdminRequest);
 
         //Создание аккаунта юзеру
-        CreateUserAccountsResponse createUserAccountsResponse1 = new ValidatedCrudRequester<CreateUserAccountsResponse>(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusCreated(), Endpoint.ACCOUNTS)
-                .post();
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(createUserByAdminRequest);
         int idFirst = createUserAccountsResponse1.getId();
         //Создание второго аккаунта юзеру
-        CreateUserAccountsResponse createUserAccountsResponse2 = new ValidatedCrudRequester<CreateUserAccountsResponse>(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusCreated(), Endpoint.ACCOUNTS)
-                .post();
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(createUserByAdminRequest);
         int idSecond = createUserAccountsResponse2.getId();
+        //Депозит денег
+        DepositeSteps.makeDeposite(amount, authorizationRequestUser, idFirst);
 
-        DepositeRequest depositeRequest = DepositeRequest.builder()
-                .balance(amount)
-                .id(idFirst)
-                .build();
-
-        new CrudRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.balanceMatches(depositeRequest.getBalance()), Endpoint.ACCOUNTS_DEPOSITE)
-                .post(depositeRequest);
         // Трансфер денег с аккаунта на аккаунт
         TransferRequest transferRequest = TransferRequest.builder()
                 .senderAccountId(idFirst)
@@ -82,34 +74,13 @@ public class TransferUserMoney extends BaseTest {
         AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(createUserByAdminRequest);
 
         //Создание аккаунта юзеру
-        CreateUserAccountsResponse createUserAccountsResponse1 = new ValidatedCrudRequester<CreateUserAccountsResponse>(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusCreated(), Endpoint.ACCOUNTS)
-                .post();
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(createUserByAdminRequest);
         int idFirst = createUserAccountsResponse1.getId();
         //Создание второго аккаунта юзеру
-        CreateUserAccountsResponse createUserAccountsResponse2 = new ValidatedCrudRequester<CreateUserAccountsResponse>(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusCreated(), Endpoint.ACCOUNTS)
-                .post();
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(createUserByAdminRequest);
         int idSecond = createUserAccountsResponse2.getId();
-        //Депозит денег юзеру на аккаунт
-//        int idAccount = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-//                .get()
-//                .extract()
-//                .body().jsonPath().getInt("accounts[0].id");
-//
-//        int idAccount2 = new GetInfoUserRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()), ResponseSpecs.requestReturnStatusOK())
-//                .get()
-//                .extract()
-//                .body().jsonPath().getInt("accounts[1].id");
-
-        DepositeRequest depositeRequest = DepositeRequest.builder()
-                .balance(RandomData.getBalance())
-                .id(idFirst)
-                .build();
-
-        new CrudRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.balanceMatches(depositeRequest.getBalance()), Endpoint.ACCOUNTS_DEPOSITE)
-                .post(depositeRequest);
+        //Депозит суммы на аккаунт
+        DepositeSteps.makeDeposite(RandomData.getRandomBalance(), authorizationRequestUser, idFirst);
         // Трансфер денег с аккаунта на аккаунт
         TransferRequest transferRequest = TransferRequest.builder()
                 .senderAccountId(idFirst)
@@ -117,10 +88,8 @@ public class TransferUserMoney extends BaseTest {
                 .amount(amount)
                 .build();
 
-        TransferResponse transferResponse = new ValidatedCrudRequester<TransferResponse>(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
+        new CrudRequester(RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.userCanNotChangeNameBadRequest(errorValue), Endpoint.ACCOUNTS_TRANSFER)
                 .post(transferRequest);
-
-        softly.assertThat(transferResponse).isEqualTo(errorValue);
     }
 }
