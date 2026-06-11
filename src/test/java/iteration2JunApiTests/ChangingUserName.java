@@ -4,6 +4,7 @@ import models.AuthorizationRequest;
 import models.ChangeNameByUserRequest;
 import models.CreateUserByAdminRequest;
 import models.GetUserInfoResponse;
+import models.comparison.ModelAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -43,6 +44,8 @@ public class ChangingUserName extends BaseTest {
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
                 .get();
 
+        //Проверка соответствия запроса и ответа по модели
+        ModelAssertions.assertThatModels(nameUser, changeNameByUserRequest);
         softly.assertThat(nameUser.getName()).isEqualTo(name);
     }
 

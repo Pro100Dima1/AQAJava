@@ -2,6 +2,7 @@ package iteration2JunApiTests;
 
 import generator.RandomData;
 import models.*;
+import models.comparison.ModelAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -55,6 +56,7 @@ public class TransferUserMoney extends BaseTest {
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.ACCOUNTS_TRANSFER)
                 .post(transferRequest);
 
+        ModelAssertions.assertThatModels(transferRequest, transferResponse);
         softly.assertThat(transferResponse.getAmount()).isEqualTo(amount);
     }
 

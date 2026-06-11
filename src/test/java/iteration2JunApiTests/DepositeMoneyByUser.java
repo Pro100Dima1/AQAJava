@@ -5,6 +5,7 @@ import models.AuthorizationRequest;
 import models.CreateUserAccountsResponse;
 import models.CreateUserByAdminRequest;
 import models.DepositeResponse;
+import models.comparison.ModelAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,7 +16,7 @@ import requests.skelethon.requesters.steps.DepositeSteps;
 
 import java.util.stream.Stream;
 
-public class DepositeMoneyByUser extends BaseTest{
+public class DepositeMoneyByUser extends BaseTest {
 
     public static Stream<Arguments> validValueOfDeposite() {
         return Stream.of(
@@ -41,6 +42,7 @@ public class DepositeMoneyByUser extends BaseTest{
         //Делаем депозит на аккаунт с конкретным id
         DepositeResponse depositeResponse = DepositeSteps.makeDeposite(balance, authorizationRequestUser, idAccount);
 
+        ModelAssertions.assertThatModels(createUserAccountsResponse, depositeResponse);
         softly.assertThat(depositeResponse.getBalance()).isEqualTo(balance);
     }
 
