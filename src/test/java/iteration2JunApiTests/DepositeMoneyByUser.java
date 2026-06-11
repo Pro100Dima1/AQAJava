@@ -1,22 +1,18 @@
 package iteration2JunApiTests;
 
 import generator.RandomData;
-import models.*;
+import models.AuthorizationRequest;
+import models.CreateUserAccountsResponse;
+import models.CreateUserByAdminRequest;
+import models.DepositeResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import requests.*;
-import requests.skelethon.interfaces.Endpoint;
-import requests.skelethon.requesters.CrudRequester;
-import requests.skelethon.requesters.ValidatedCrudRequester;
 import requests.skelethon.requesters.steps.AdminSteps;
 import requests.skelethon.requesters.steps.CreateAccountsSteps;
 import requests.skelethon.requesters.steps.DepositeSteps;
-import specs.RequestSpecs;
-import specs.ResponseSpecs;
 
-import java.util.List;
 import java.util.stream.Stream;
 
 public class DepositeMoneyByUser extends BaseTest{

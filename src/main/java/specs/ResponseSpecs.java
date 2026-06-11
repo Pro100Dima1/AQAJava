@@ -2,15 +2,8 @@ package specs;
 
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.ResponseSpecification;
-import models.AuthorizationRequest;
-import models.CheckUserAccountsResponse;
-import models.GetUserInfoResponse;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
-import requests.GetInfoAccountsUserRequester;
-import requests.GetInfoUserRequester;
-
-import java.util.List;
 
 public class ResponseSpecs {
     private ResponseSpecs() {}

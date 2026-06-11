@@ -1,6 +1,7 @@
 package requests.skelethon.requesters.steps;
 
 import generator.RandomData;
+import generator.RandomModelGeneerator;
 import models.AuthorizationRequest;
 import models.CreateUserByAdminRequest;
 import models.UserRole;
@@ -12,11 +13,7 @@ import specs.ResponseSpecs;
 public class AdminSteps {
        public static CreateUserByAdminRequest createUserByAdmin() {
         // Создание юзера админом
-        CreateUserByAdminRequest createUserByAdminRequest = CreateUserByAdminRequest.builder()
-                .username(RandomData.getName())
-                .password(RandomData.getPassword())
-                .role(UserRole.USER.toString())
-                .build();
+        CreateUserByAdminRequest createUserByAdminRequest = RandomModelGeneerator.generate(CreateUserByAdminRequest.class);
 
         new CrudRequester(RequestSpecs.autharizationByAdmin(),
                 ResponseSpecs.requestReturnStatusCreated(), Endpoint.ADMIN_USER)
