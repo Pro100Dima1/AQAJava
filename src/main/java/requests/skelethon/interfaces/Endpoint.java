@@ -9,49 +9,49 @@ import models.*;
 public enum Endpoint {
 
     ADMIN_USER(
-            "/api/v1/admin/users",
+            "admin/users",
             CreateUserByAdminRequest.class,
             CreateUserByAdminResponse.class
     ),
 
     LOGIN(
-            "/api/v1/auth/login",
+            "auth/login",
             AuthorizationRequest.class,
             AuthorizationResponse.class
     ),
 
     CUSTOMER_PROFILE(
-            "/api/v1/customer/profile",
+            "customer/profile",
             ChangeNameByUserRequest.class,
             GetUserInfoResponse.class
     ),
 
     GET_INFO(
-            "/api/v1/customer/profile",
+            "customer/profile",
             BaseModel.class,
             GetUserInfoResponse.class
     ),
 
     ACCOUNTS(
-            "/api/v1/accounts",
+            "accounts",
             BaseModel.class,
             CreateUserAccountsResponse.class
     ),
 
     ACCOUNTS_DEPOSITE(
-            "/api/v1/accounts/deposit",
+            "accounts/deposit",
             DepositeRequest.class,
             DepositeResponse.class
     ),
 
     CUSTOMER_ACCOUNTS(
-            "/api/v1/customer/accounts",
+            "customer/accounts",
             BaseModel.class,
             CheckUserAccountsResponse.class
     ),
 
     ACCOUNTS_TRANSFER(
-            "/api/v1/accounts/transfer",
+            "accounts/transfer",
             TransferRequest.class,
             TransferResponse.class
     );
