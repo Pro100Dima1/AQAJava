@@ -42,7 +42,7 @@ public class DepositeMoneyByUser extends BaseTest {
         //Делаем депозит на аккаунт с конкретным id
         DepositeResponse depositeResponse = DepositeSteps.makeDeposite(balance, authorizationRequestUser, idAccount);
 
-        ModelAssertions.assertThatModels(createUserAccountsResponse, depositeResponse);
+        ModelAssertions.assertThatModels(createUserAccountsResponse, depositeResponse).match();
         softly.assertThat(depositeResponse.getBalance()).isEqualTo(balance);
     }
 

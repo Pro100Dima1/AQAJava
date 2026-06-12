@@ -45,7 +45,7 @@ public class ChangingUserName extends BaseTest {
                 .get();
 
         //Проверка соответствия запроса и ответа по модели
-        ModelAssertions.assertThatModels(nameUser, changeNameByUserRequest);
+        ModelAssertions.assertThatModels(changeNameByUserRequest, nameUser).match();
         softly.assertThat(nameUser.getName()).isEqualTo(name);
     }
 

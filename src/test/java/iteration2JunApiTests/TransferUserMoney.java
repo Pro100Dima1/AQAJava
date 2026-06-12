@@ -56,7 +56,7 @@ public class TransferUserMoney extends BaseTest {
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.ACCOUNTS_TRANSFER)
                 .post(transferRequest);
 
-        ModelAssertions.assertThatModels(transferRequest, transferResponse);
+        ModelAssertions.assertThatModels(transferRequest, transferResponse).match();
         softly.assertThat(transferResponse.getAmount()).isEqualTo(amount);
     }
 
