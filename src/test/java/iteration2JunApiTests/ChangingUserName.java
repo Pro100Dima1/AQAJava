@@ -47,6 +47,13 @@ public class ChangingUserName extends BaseTest {
         //Проверка соответствия запроса и ответа по модели
         ModelAssertions.assertThatModels(changeNameByUserRequest, nameUser).match();
         softly.assertThat(nameUser.getName()).isEqualTo(name);
+        //Удаление юзера по id
+        new CrudRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK(), Endpoint.DELETE_USER)
+                .delete(nameUser.getId());
+        //Проверка, что юзер удалён
+         new CrudRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
+                ResponseSpecs.requestReturnStatusUnauthorized(), Endpoint.GET_INFO)
+                .get();
     }
 
     public static Stream<Arguments> invalidNameUserTests() {

@@ -58,6 +58,17 @@ public class TransferUserMoney extends BaseTest {
 
         ModelAssertions.assertThatModels(transferRequest, transferResponse).match();
         softly.assertThat(transferResponse.getAmount()).isEqualTo(amount);
+
+        GetUserInfoResponse userInfo = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
+                ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
+                .get();
+        //Удаление юзера по id
+        new CrudRequester(RequestSpecs.autharizationByAdmin(), ResponseSpecs.requestReturnStatusOK(), Endpoint.DELETE_USER)
+                .delete(userInfo.getId());
+        //Проверка, что юзер удалён
+        new CrudRequester(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
+                ResponseSpecs.requestReturnStatusUnauthorized(), Endpoint.GET_INFO)
+                .get();
     }
 
     public static Stream<Arguments> inValidTransferValue() {

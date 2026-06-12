@@ -31,6 +31,12 @@ public class ResponseSpecs {
                 .build();
     }
 
+    public static ResponseSpecification requestReturnStatusUnauthorized(){
+        return defaultResponseSpec()
+                .expectStatusCode(HttpStatus.SC_UNAUTHORIZED)
+                .build();
+    }
+
     public static ResponseSpecification balanceMatches(){
         return defaultResponseSpec()
                 .expectStatusCode(HttpStatus.SC_OK)

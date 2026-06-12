@@ -54,6 +54,12 @@ public enum Endpoint {
             "accounts/transfer",
             TransferRequest.class,
             TransferResponse.class
+    ),
+
+    DELETE_USER(
+            "admin/users",
+            BaseModel.class,
+            BaseModel.class
     );
 
     private final String url;
