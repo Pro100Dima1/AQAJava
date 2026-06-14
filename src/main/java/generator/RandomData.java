@@ -8,7 +8,7 @@ public class RandomData {
     private RandomData() {}
 
     public static String getName(){
-        return RandomStringUtils.randomAlphabetic(10);
+        return RandomStringUtils.randomAlphabetic(7);
     }
 
     public static String getPassword(){
