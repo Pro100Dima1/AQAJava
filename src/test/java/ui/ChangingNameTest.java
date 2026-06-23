@@ -1,9 +1,6 @@
 package ui;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.*;
 import generator.RandomData;
 import models.AuthorizationRequest;
 import models.CreateUserByAdminRequest;
@@ -52,10 +49,17 @@ public class ChangingNameTest {
         $(Selectors.byText("User Dashboard")).shouldBe(Condition.visible);
 
         $(".user-username").shouldHave(Condition.text(user.getUsername())).click();
+
         $x("//h1[text()='\u270F\uFE0F Edit Profile']").shouldBe(Condition.visible);
-        Selenide.sleep(2000);
-        $(Selectors.byAttribute("placeholder", "Enter new name")).setValue(randomName);
-        $("button.btn.btn-primary.mt-3")
+        $(Selectors.byAttribute("placeholder", "Enter new name"))
+                .shouldBe(Condition.visible)
+                .shouldBe(Condition.enabled)
+                .shouldBe(Condition.clickable)
+                .setValue(randomName)
+                .shouldHave(Condition.value(randomName));
+
+        $("button.btn.btn-primary.mt-3").shouldBe(Condition.visible)
+                .shouldBe(Condition.enabled)
                 .shouldHave(Condition.exactText("\uD83D\uDCBE Save Changes"))
                 .click();
 
