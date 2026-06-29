@@ -9,6 +9,7 @@ import models.AuthorizationRequest;
 import models.CreateUserAccountsResponse;
 import models.CreateUserByAdminRequest;
 import models.GetUserInfoResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,7 @@ import specs.ResponseSpecs;
 
 import java.util.Map;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.switchTo;
+import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DepositeMoneyTest {
@@ -38,6 +38,11 @@ public class DepositeMoneyTest {
         Configuration.browserCapabilities.setCapability("selenoid:options",
                 Map.of("enableVNC", true, "enableLog", true)
         );
+    }
+
+    @AfterEach
+    void tearDown() {
+        closeWebDriver();
     }
 
     @Test

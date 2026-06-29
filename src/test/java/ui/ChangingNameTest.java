@@ -5,6 +5,7 @@ import generator.RandomData;
 import models.AuthorizationRequest;
 import models.CreateUserByAdminRequest;
 import models.GetUserInfoResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,11 @@ public class ChangingNameTest {
         Configuration.browserCapabilities.setCapability("selenoid:options",
                 Map.of("enableVNC", true, "enableLog", true)
         );
+    }
+
+    @AfterEach
+    void tearDown() {
+        closeWebDriver();
     }
 
     @Test
