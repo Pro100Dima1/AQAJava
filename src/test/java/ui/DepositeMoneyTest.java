@@ -20,47 +20,23 @@ import requests.skelethon.requesters.steps.AdminSteps;
 import requests.skelethon.requesters.steps.CreateAccountsSteps;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
+import ui_pages.BankAlert;
+import ui_pages.UserDashboardPage;
 
 import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DepositeMoneyTest {
-    @BeforeAll
-    public static void setupSelenoid() {
-        Configuration.remote = "http://localhost:4444/wd/hub";
-        Configuration.baseUrl = "http://172.26.160.1:3000";
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 15000;
-
-        Configuration.browserCapabilities.setCapability("selenoid:options",
-                Map.of("enableVNC", true, "enableLog", true)
-        );
-    }
-
-    @AfterEach
-    void tearDown() {
-        closeWebDriver();
-    }
+public class DepositeMoneyTest extends BaseUiTest{
 
     @Test
     @DisplayName("positive test")
     public void userCanOpenDepositePage() {
         CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
+        authAsUser(user);
 
-        Selenide.open("/");
-        $(Selectors.byAttribute("placeholder", "Username")).setValue(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Password")).setValue(user.getPassword());
-        $("button").click();
-        $(Selectors.byText("User Dashboard")).shouldBe(Condition.visible);
-
-        $(Selectors.byText("\uD83D\uDCB0 Deposit Money")).shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable)
-                .click();
-        $(Selectors.byText("\uD83D\uDCB0 Deposit Money")).shouldBe(Condition.visible);
+        new UserDashboardPage().open().waitLoadingDepositMoneyPage();
     }
 
     @Test
@@ -69,33 +45,33 @@ public class DepositeMoneyTest {
         CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
         String amount = String.valueOf(RandomData.getRandomBalance());
         AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-
-        Selenide.open("/");
-        $(Selectors.byAttribute("placeholder", "Username")).setValue(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Password")).setValue(user.getPassword());
-        $("button").click();
-        $(Selectors.byText("User Dashboard")).shouldBe(Condition.visible);
-
         CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(user);
 
-        $(Selectors.byText("\uD83D\uDCB0 Deposit Money")).shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable)
-                .click();
+        new  UserDashboardPage().open()
+                .waitLoadingDepositMoneyPage()
+                .depositMoney(account, amount)
+                .checkAlertMessageAndAccept(BankAlert.SUCCSESSFULY_DEPOSIT.getMessage(amount, account.getAccountNumber()));
 
-        $("select.account-selector").selectOptionContainingText(account.getAccountNumber());
 
-        $(Selectors.byAttribute("placeholder", "Enter amount")).shouldBe(Condition.clickable)
-                .sendKeys(amount);
 
-        $(Selectors.byText("\uD83D\uDCB5 Deposit")).shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable)
-                .click();
+//        $(Selectors.byText("\uD83D\uDCB0 Deposit Money")).shouldBe(Condition.visible)
+//                .shouldBe(Condition.enabled)
+//                .shouldBe(Condition.clickable)
+//                .click();
 
-        Alert depositAlert = switchTo().alert();
-        assertEquals("✅ Successfully deposited $" + amount + " to account " + account.getAccountNumber() + "!", depositAlert.getText());
-        depositAlert.accept();
+     //   $("select.account-selector").selectOptionContainingText(account.getAccountNumber());
+
+//        $(Selectors.byAttribute("placeholder", "Enter amount")).shouldBe(Condition.clickable)
+//                .sendKeys(amount);
+
+//        $(Selectors.byText("\uD83D\uDCB5 Deposit")).shouldBe(Condition.visible)
+//                .shouldBe(Condition.enabled)
+//                .shouldBe(Condition.clickable)
+//                .click();
+
+//        Alert depositAlert = switchTo().alert();
+//        assertEquals("✅ Successfully deposited $" + amount + " to account " + account.getAccountNumber() + "!", depositAlert.getText());
+//        depositAlert.accept();
 
         GetUserInfoResponse userInfo = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)

@@ -25,24 +25,7 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TrensferMoneyTest {
-    @BeforeAll
-    public static void setupSelenoid() {
-        Configuration.remote = "http://localhost:4444/wd/hub";
-        Configuration.baseUrl = "http://172.26.160.1:3000";
-        Configuration.browser = "chrome";
-        Configuration.browserSize = "1920x1080";
-        Configuration.timeout = 15000;
-
-        Configuration.browserCapabilities.setCapability("selenoid:options",
-                Map.of("enableVNC", true, "enableLog", true)
-        );
-    }
-
-    @AfterEach
-    void tearDown() {
-        closeWebDriver();
-    }
+public class TrensferMoneyTest extends BaseUiTest{
 
     @Test
     @DisplayName("positive test")
