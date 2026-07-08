@@ -13,7 +13,6 @@ public class UserDashboardPage extends BasePage<UserDashboardPage> {
     private SelenideElement placeHolderEnterAmount = $(Selectors.byAttribute("placeholder", "Enter amount"));
     private SelenideElement depositMoneyButton =$(Selectors.byText("\uD83D\uDCB5 Deposit"));
 
-
     @Override
     public String url() {
         return "/deposit";
@@ -29,6 +28,26 @@ public class UserDashboardPage extends BasePage<UserDashboardPage> {
                 .selectOptionContainingText(account.getAccountNumber());
         placeHolderEnterAmount.shouldBe(Condition.clickable)
                 .sendKeys(amount);
+        depositMoneyButton.shouldBe(Condition.visible)
+                .shouldBe(Condition.enabled)
+                .shouldBe(Condition.clickable)
+                .click();
+        return this;
+    }
+
+    public UserDashboardPage depositMoneyWithoutSelectedAccount(CreateUserAccountsResponse account, String amount) {
+        placeHolderEnterAmount.shouldBe(Condition.clickable)
+                .sendKeys(amount);
+        depositMoneyButton.shouldBe(Condition.visible)
+                .shouldBe(Condition.enabled)
+                .shouldBe(Condition.clickable)
+                .click();
+        return this;
+    }
+
+    public UserDashboardPage depositMoneyWithoutAmount(CreateUserAccountsResponse account) {
+        selectorAccountNumber.shouldBe(Condition.visible)
+                .selectOptionContainingText(account.getAccountNumber());
         depositMoneyButton.shouldBe(Condition.visible)
                 .shouldBe(Condition.enabled)
                 .shouldBe(Condition.clickable)

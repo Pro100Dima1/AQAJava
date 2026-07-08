@@ -1,12 +1,9 @@
 package ui;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selectors;
 import generator.RandomData;
 import models.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Alert;
@@ -18,9 +15,10 @@ import requests.skelethon.requesters.steps.CreateAccountsSteps;
 import requests.skelethon.requesters.steps.DepositeSteps;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
+import ui_pages.BankAlert;
+import ui_pages.TransferMoneyPage;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,18 +29,9 @@ public class TrensferMoneyTest extends BaseUiTest{
     @DisplayName("positive test")
     public void userCanOpenTransferPage() {
         CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
+        authAsUser(user);
 
-        open("/");
-        $(Selectors.byAttribute("placeholder", "Username")).setValue(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Password")).setValue(user.getPassword());
-        $("button").click();
-        $(Selectors.byText("User Dashboard")).shouldBe(Condition.visible);
-
-        $(Selectors.byText("\uD83D\uDD04 Make a Transfer")).shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable)
-                .click();
-        $(Selectors.byText("\uD83D\uDD04 Make a Transfer")).shouldBe(Condition.visible);
+        new TransferMoneyPage().open().waitLoadingTransferMoneyPage();
     }
 
     @Test
@@ -54,46 +43,17 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
 
         Float amount = RandomData.getRandomBalance();
         DepositeSteps.makeDeposite(amount, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $("select.account-selector").selectOptionContainingText(createUserAccountsResponse1.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter recipient account number"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(createUserAccountsResponse2.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(amount));
-
-        $("#confirmCheck").setSelected(true);
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("✅ Successfully transferred $" + amount + " to account " + createUserAccountsResponse2.getAccountNumber() + "!", alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, amount)
+                .acceptCheckbox()
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_SUCCSESSFULY.getMessage(amount, createUserAccountsResponse2.getAccountNumber()));
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
@@ -120,48 +80,19 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
 
         final Float MAX_AMOUNT = 10000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $("select.account-selector").selectOptionContainingText(createUserAccountsResponse1.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter recipient account number"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(createUserAccountsResponse2.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(MAX_AMOUNT));
-
-        $("#confirmCheck").setSelected(true);
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("✅ Successfully transferred $" + MAX_AMOUNT + " to account " + createUserAccountsResponse2.getAccountNumber() + "!", alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .acceptCheckbox()
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_SUCCSESSFULY.getMessage(MAX_AMOUNT, createUserAccountsResponse2.getAccountNumber()));
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
@@ -188,6 +119,7 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
 
         final Float MAX_AMOUNT = 10001F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
@@ -195,42 +127,12 @@ public class TrensferMoneyTest extends BaseUiTest{
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $("select.account-selector").selectOptionContainingText(createUserAccountsResponse1.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter recipient account number"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(createUserAccountsResponse2.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(MAX_AMOUNT));
-
-        $("#confirmCheck").setSelected(true);
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("❌ Error: Transfer amount cannot exceed 10000",alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .acceptCheckbox()
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_ABOVE_MAX_AMOUNT_FAILED.getMessage());
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
@@ -257,47 +159,18 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
 
         final Float MAX_AMOUNT = 10000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $("select.account-selector").selectOptionContainingText(createUserAccountsResponse1.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter recipient account number"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(createUserAccountsResponse2.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(MAX_AMOUNT));
-
-        $("#confirmCheck").setSelected(true);
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("❌ Error: Invalid transfer: insufficient funds or invalid accounts",alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .acceptCheckbox()
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_ABOVE_ACCOUNT_BALANCE_FAILED.getMessage());
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
@@ -324,46 +197,18 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
 
         final Float TRANSFER_AMOUNT = 1000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter recipient account number"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(createUserAccountsResponse2.getAccountNumber());
-                $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(TRANSFER_AMOUNT));
-
-        $("#confirmCheck").setSelected(true);
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("❌ Please fill all fields and confirm.",alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferFieldWithoutSelectedAccountNumber(user, createUserAccountsResponse2, TRANSFER_AMOUNT)
+                .acceptCheckbox()
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_WITHOUT_ALL_FIELD_CONFIRM_FAILED.getMessage());
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
@@ -390,44 +235,18 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
 
         final Float TRANSFER_AMOUNT = 1000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $("select.account-selector").selectOptionContainingText(createUserAccountsResponse1.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(TRANSFER_AMOUNT));
-
-        $("#confirmCheck").setSelected(true);
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("❌ Please fill all fields and confirm.", alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferFieldWithoutAccountNumber(createUserAccountsResponse1, user, TRANSFER_AMOUNT)
+                .acceptCheckbox()
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_WITHOUT_ALL_FIELD_CONFIRM_FAILED.getMessage());
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
@@ -454,45 +273,18 @@ public class TrensferMoneyTest extends BaseUiTest{
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
         CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
+        authAsUser(user);
+
 
         final Float MAX_AMOUNT = 10000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
         DepositeSteps.makeDeposite(MAX_DEPOSIT_AMOUNT, authorizationRequestUser, createUserAccountsResponse1.getId());
 
-        String authToken = new CrudRequester(
-                RequestSpecs.autharizationByUser(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
-                ResponseSpecs.requestReturnStatusOK(),
-                Endpoint.LOGIN)
-                .post(AuthorizationRequest.builder()
-                        .username(user.getUsername())
-                        .password(user.getPassword())
-                        .build())
-                .extract()
-                .header("Authorization");
-
-        open("/");
-        executeJavaScript("localStorage.setItem('authToken', arguments[0]);", authToken);
-        open("/transfer");
-
-        $("select.account-selector").selectOptionContainingText(createUserAccountsResponse1.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter recipient name"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(user.getUsername());
-        $(Selectors.byAttribute("placeholder", "Enter recipient account number"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(createUserAccountsResponse2.getAccountNumber());
-        $(Selectors.byAttribute("placeholder", "Enter amount"))
-                .shouldBe(Condition.clickable)
-                .sendKeys(String.valueOf(MAX_AMOUNT));
-
-        $(Selectors.byText("\uD83D\uDE80 Send Transfer"))
-                .shouldBe(Condition.visible)
-                .shouldBe(Condition.enabled)
-                .shouldBe(Condition.clickable).click();
-
-        Alert alert = switchTo().alert();
-        assertEquals("❌ Please fill all fields and confirm.",alert.getText());
-        alert.accept();
+        new TransferMoneyPage().open()
+                .waitLoadingTransferMoneyPage()
+                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .clickSendTransferButton()
+                .checkAlertMessageAndAccept(BankAlert.TRANSFER_WITHOUT_ALL_FIELD_CONFIRM_FAILED.getMessage());
 
         GetUserInfoResponse getUserInfoResponse = new ValidatedCrudRequester<GetUserInfoResponse>(RequestSpecs.getUserInfo(authorizationRequestUser.getUsername(), authorizationRequestUser.getPassword()),
                 ResponseSpecs.requestReturnStatusOK(), Endpoint.GET_INFO)
