@@ -84,4 +84,23 @@ public class RequestSpecs {
                 .addHeader("Authorization", userAuthHeader)
                 .build();
     }
+
+    public static String getUserAuthHeader(String username, String password) {
+        String userAuthHeader;
+
+        if (!authHeaders.containsKey(username)) {
+            userAuthHeader = new CrudRequester(
+                    RequestSpecs.userLogin(),
+                    ResponseSpecs.requestReturnStatusOK(),
+                    Endpoint.LOGIN)
+                    .post(AuthorizationRequest.builder().username(username).password(password).build())
+                    .extract()
+                    .header("Authorization");
+
+            authHeaders.put(username, userAuthHeader);
+        } else {
+            userAuthHeader = authHeaders.get(username);
+        }
+        return userAuthHeader;
+    }
 }
