@@ -6,8 +6,12 @@ import models.BaseModel;
 import requests.skelethon.HttpRequest;
 import requests.skelethon.interfaces.CrudEndpointInterface;
 import requests.skelethon.interfaces.Endpoint;
+import requests.skelethon.interfaces.GetAllEndpointInterface;
 
-public class ValidatedCrudRequester<T extends BaseModel> extends HttpRequest implements CrudEndpointInterface {
+import java.util.Arrays;
+import java.util.List;
+
+public class ValidatedCrudRequester<T extends BaseModel> extends HttpRequest implements CrudEndpointInterface, GetAllEndpointInterface {
     private CrudRequester crudRequester;
 
     // Для пзитивных тестов. Мы подразумеваем, что запрос прошел успешно и получили ответ 200 и дессериализуем ответ в объект. далее валидируем поля
@@ -39,4 +43,9 @@ public class ValidatedCrudRequester<T extends BaseModel> extends HttpRequest imp
     public T delete(int id) {
         return (T)crudRequester.delete(id).extract().as(endpoint.getResponseModel());
     }
+
+    @Override
+    public List<T> getAll(Class<?> clazz) {
+        T[] array = (T[]) crudRequester.getAll(clazz).extract().as(clazz);
+        return Arrays.asList(array);    }
 }

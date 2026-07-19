@@ -13,8 +13,10 @@ import requests.skelethon.requesters.steps.AdminSteps;
 import requests.skelethon.requesters.steps.CreateAccountsSteps;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
-import ui_pages.BankAlert;
-import ui_pages.UserDashboardPage;
+import ui.annotations.UserSession;
+import ui.storage.SessionStorage;
+import ui.ui_pages.BankAlert;
+import ui.ui_pages.UserDashboardPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,13 +32,12 @@ public class DepositeMoneyTest extends BaseUiTest {
     }
 
     @Test
+    @UserSession
     @DisplayName("positive test")
     public void userCanDepositMoney() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
         String amount = String.valueOf(RandomData.getRandomBalance());
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(user);
-        authAsUser(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
 
         new UserDashboardPage().open()
                 .waitLoadingDepositMoneyPage()
@@ -51,13 +52,12 @@ public class DepositeMoneyTest extends BaseUiTest {
     }
 
     @Test
+    @UserSession
     @DisplayName("positive test")
     public void userCanDepositMaxMoney() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
         final float MAX_AMOUNT = 5000.00f;
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(user);
-        authAsUser(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
 
         new UserDashboardPage().open()
                 .waitLoadingDepositMoneyPage()
@@ -72,13 +72,12 @@ public class DepositeMoneyTest extends BaseUiTest {
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotDepositAboveMaxMoney() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
         final float ABOVE_MAX_AMOUNT = 5500.00f;
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(user);
-        authAsUser(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
 
         new UserDashboardPage().open()
                 .waitLoadingDepositMoneyPage()
@@ -93,13 +92,12 @@ public class DepositeMoneyTest extends BaseUiTest {
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotDepositMoneyWithoutSelectedAccount() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
         String amount = String.valueOf(RandomData.getRandomBalance());
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(user);
-        authAsUser(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
 
         new UserDashboardPage().open()
                 .waitLoadingDepositMoneyPage()
@@ -114,12 +112,11 @@ public class DepositeMoneyTest extends BaseUiTest {
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotDepositMoneyWithoutAmount() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(user);
-        authAsUser(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse account = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
 
         new UserDashboardPage().open()
                 .waitLoadingDepositMoneyPage()
