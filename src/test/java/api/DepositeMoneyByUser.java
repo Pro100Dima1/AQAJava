@@ -1,4 +1,4 @@
-package iteration2JunApiTests;
+package api;
 
 import generator.RandomData;
 import models.*;
