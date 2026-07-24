@@ -1,26 +1,23 @@
 package ui;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selectors;
 import generator.RandomData;
 import models.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Alert;
 import requests.skelethon.interfaces.Endpoint;
-import requests.skelethon.requesters.CrudRequester;
 import requests.skelethon.requesters.ValidatedCrudRequester;
 import requests.skelethon.requesters.steps.AdminSteps;
 import requests.skelethon.requesters.steps.CreateAccountsSteps;
 import requests.skelethon.requesters.steps.DepositeSteps;
 import specs.RequestSpecs;
 import specs.ResponseSpecs;
-import ui_pages.BankAlert;
-import ui_pages.TransferMoneyPage;
+import ui.annotations.UserSession;
+import ui.storage.SessionStorage;
+import ui.ui_pages.BankAlert;
+import ui.ui_pages.TransferMoneyPage;
 
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TrensferMoneyTest extends BaseUiTest{
@@ -35,22 +32,21 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("positive test")
     public void userCanTransferValidAmount() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
         Float amount = RandomData.getRandomBalance();
         DepositeSteps.makeDeposite(amount, authorizationRequestUser, createUserAccountsResponse1.getId());
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, amount)
+                .enterTransferField(createUserAccountsResponse1, SessionStorage.getUser(1), createUserAccountsResponse2, amount)
                 .acceptCheckbox()
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_SUCCSESSFULY.getMessage(amount, createUserAccountsResponse2.getAccountNumber()));
@@ -72,15 +68,14 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("positive test")
     public void userCanTransferMaxAmount() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
         final Float MAX_AMOUNT = 10000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
@@ -89,7 +84,7 @@ public class TrensferMoneyTest extends BaseUiTest{
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .enterTransferField(createUserAccountsResponse1, SessionStorage.getUser(1), createUserAccountsResponse2, MAX_AMOUNT)
                 .acceptCheckbox()
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_SUCCSESSFULY.getMessage(MAX_AMOUNT, createUserAccountsResponse2.getAccountNumber()));
@@ -111,15 +106,14 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotTransferAboveMaxAmount() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
         final Float MAX_AMOUNT = 10001F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
@@ -129,7 +123,7 @@ public class TrensferMoneyTest extends BaseUiTest{
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .enterTransferField(createUserAccountsResponse1, SessionStorage.getUser(1), createUserAccountsResponse2, MAX_AMOUNT)
                 .acceptCheckbox()
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_ABOVE_MAX_AMOUNT_FAILED.getMessage());
@@ -151,15 +145,14 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotTransferAmountAboveAccountBalance() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
         final Float MAX_AMOUNT = 10000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
@@ -167,7 +160,7 @@ public class TrensferMoneyTest extends BaseUiTest{
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .enterTransferField(createUserAccountsResponse1, SessionStorage.getUser(1), createUserAccountsResponse2, MAX_AMOUNT)
                 .acceptCheckbox()
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_ABOVE_ACCOUNT_BALANCE_FAILED.getMessage());
@@ -189,15 +182,14 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotTransferAmountWithoutSelectedAccountNumber() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
         final Float TRANSFER_AMOUNT = 1000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
@@ -205,7 +197,7 @@ public class TrensferMoneyTest extends BaseUiTest{
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferFieldWithoutSelectedAccountNumber(user, createUserAccountsResponse2, TRANSFER_AMOUNT)
+                .enterTransferFieldWithoutSelectedAccountNumber(SessionStorage.getUser(1), createUserAccountsResponse2, TRANSFER_AMOUNT)
                 .acceptCheckbox()
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_WITHOUT_ALL_FIELD_CONFIRM_FAILED.getMessage());
@@ -227,15 +219,14 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotTransferAmountWithoutAccountNumber() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
         final Float TRANSFER_AMOUNT = 1000F;
         final Float MAX_DEPOSIT_AMOUNT = 5000F;
@@ -243,7 +234,7 @@ public class TrensferMoneyTest extends BaseUiTest{
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferFieldWithoutAccountNumber(createUserAccountsResponse1, user, TRANSFER_AMOUNT)
+                .enterTransferFieldWithoutAccountNumber(createUserAccountsResponse1, SessionStorage.getUser(1), TRANSFER_AMOUNT)
                 .acceptCheckbox()
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_WITHOUT_ALL_FIELD_CONFIRM_FAILED.getMessage());
@@ -265,15 +256,14 @@ public class TrensferMoneyTest extends BaseUiTest{
     }
 
     @Test
+    @UserSession
     @DisplayName("negative test")
     public void userCanNotTransferAmountWithoutAcceptCheckbox() {
-        CreateUserByAdminRequest user = AdminSteps.createUserByAdmin();
-        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(user);
-        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(user);
+        AuthorizationRequest authorizationRequestUser = AdminSteps.authorizationUser(SessionStorage.getUser(1));
+        CreateUserAccountsResponse createUserAccountsResponse1 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber1 = createUserAccountsResponse1.getAccountNumber();
-        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(user);
+        CreateUserAccountsResponse createUserAccountsResponse2 = CreateAccountsSteps.createAccounts(SessionStorage.getUser(1));
         String accountNumber2 = createUserAccountsResponse2.getAccountNumber();
-        authAsUser(user);
 
 
         final Float MAX_AMOUNT = 10000F;
@@ -282,7 +272,7 @@ public class TrensferMoneyTest extends BaseUiTest{
 
         new TransferMoneyPage().open()
                 .waitLoadingTransferMoneyPage()
-                .enterTransferField(createUserAccountsResponse1, user, createUserAccountsResponse2, MAX_AMOUNT)
+                .enterTransferField(createUserAccountsResponse1, SessionStorage.getUser(1), createUserAccountsResponse2, MAX_AMOUNT)
                 .clickSendTransferButton()
                 .checkAlertMessageAndAccept(BankAlert.TRANSFER_WITHOUT_ALL_FIELD_CONFIRM_FAILED.getMessage());
 

@@ -1,4 +1,4 @@
-package iteration2JunApiTests;
+package api;
 
 import models.AuthorizationRequest;
 import models.ChangeNameByUserRequest;

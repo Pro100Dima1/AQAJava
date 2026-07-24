@@ -1,4 +1,4 @@
-package ui_pages;
+package ui.ui_pages;
 
 import lombok.Getter;
 

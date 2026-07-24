@@ -1,4 +1,4 @@
-package ui_pages;
+package ui.ui_pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selectors;
