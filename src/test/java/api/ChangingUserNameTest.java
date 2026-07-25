@@ -19,7 +19,7 @@ import specs.ResponseSpecs;
 
 import java.util.stream.Stream;
 
-public class ChangingUserName extends BaseTest {
+public class ChangingUserNameTest extends BaseTest {
 
     @CsvSource({
             "Dima Orloww",

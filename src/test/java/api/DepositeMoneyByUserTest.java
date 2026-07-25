@@ -18,15 +18,13 @@ import specs.ResponseSpecs;
 
 import java.util.stream.Stream;
 
-public class DepositeMoneyByUser extends BaseTest {
+public class DepositeMoneyByUserTest extends BaseTest {
 
     public static Stream<Arguments> validValueOfDeposite() {
         return Stream.of(
                 Arguments.of(RandomData.getRandomBalance()),
-                Arguments.of("0"),
                 Arguments.of("4999.99F"),
                 Arguments.of("5000F"),
-                Arguments.of(RandomData.getRandomBalance()),
                 Arguments.of("0.01F")
         );
     }
@@ -63,7 +61,8 @@ public class DepositeMoneyByUser extends BaseTest {
         return Stream.of(
                 Arguments.of("-100", "Deposit amount must be at least 0.01"),
                 Arguments.of("5000.01", "Deposit amount cannot exceed 5000"),
-                Arguments.of("0.0001", "Deposit amount must be at least 0.01")
+                Arguments.of("0.0001", "Deposit amount must be at least 0.01"),
+                Arguments.of("0", "Deposit amount must be at least 0.01")
         );
     }
 

@@ -18,7 +18,7 @@ import specs.ResponseSpecs;
 
 import java.util.stream.Stream;
 
-public class TransferUserMoney extends BaseTest {
+public class TransferUserMoneyTest extends BaseTest {
 
     public static Stream<Arguments> validTransferValue() {
         return Stream.of(
