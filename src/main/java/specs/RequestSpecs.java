@@ -13,9 +13,10 @@ import requests.skelethon.requesters.CrudRequester;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class RequestSpecs {
-    private static Map<String, String> authHeaders = new HashMap<>(Map.of("admin", "Basic YWRtaW46YWRtaW4="));
+    private static Map<String, String> authHeaders = new ConcurrentHashMap<>(Map.of("admin", "Basic YWRtaW46YWRtaW4="));
 
     private RequestSpecs() {
     } // Приватный конструктор делается, что б не могли создавать объекты этого класса

@@ -6,9 +6,10 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TimingExtensions implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
-    private Map<String, Long> startTimes = new HashMap<>();
+    private Map<String, Long> startTimes = new ConcurrentHashMap<>();
 
     @Override
     public void beforeTestExecution(ExtensionContext context) throws Exception {
